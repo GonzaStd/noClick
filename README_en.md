@@ -1,4 +1,4 @@
-> ![NOTE]
+> [!NOTE]  
 > Vea la versión en Español  [aquí](README.md)
 
 # Game Name
