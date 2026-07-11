@@ -1,4 +1,4 @@
->![NOTE]
+> ![NOTE]
 > See English version [here](README_en.md)
 
 # Nombre del Videojuego
