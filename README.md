@@ -23,7 +23,7 @@ El jugador deberá analizar situaciones, tomar decisiones y aplicar los concepto
 
 # Wiki
 
-Propuesta completa en la [Wiki de Github](https://github.com/GonzaStd/noClick/wiki)
+[Propuesta completa](https://github.com/GonzaStd/noClick/wiki/Propuesta-%5BES%5D) en la Wiki de Github
 
 # Como descargar y ejecutar el proyecto
 ## Windows (x64)

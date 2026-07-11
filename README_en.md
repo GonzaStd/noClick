@@ -23,7 +23,7 @@ The player must analyze situations, make decisions, and apply real-world concept
 
 # Wiki
 
-Full proposal available on the [GitHub Wiki](https://github.com/GonzaStd/noClick/wiki)
+[Full proposal](https://github.com/GonzaStd/noClick/wiki/Proposal-%5BEN%5D) available on the GitHub Wiki
 
 # How to Download and Run the Project
 ## Windows (x64)
