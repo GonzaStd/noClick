@@ -64,8 +64,4 @@ Accedé al [changelog](./CHANGELOG.md)
 
 ---
 
-<a href="https://github.com/GonzaStd/noClick">noClick</a> © 2026 by <a href="https://github.com/GonzaStd">Gonzalo Vattino</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" height="14" style="margin-left: 0.2em; vertical-align: middle;">
-<img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" height="14" style="margin-left: 0.2em; vertical-align: middle;">
-<img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" height="14" style="margin-left: 0.2em; vertical-align: middle;">
-<img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" height="14" style="margin-left: 0.2em; vertical-align: middle;">
+<a href="https://github.com/GonzaStd/noClick">noClick</a> © 2026 by <a href="https://github.com/GonzaStd">Gonzalo Vattino</a> is licensed under <a href="[https://creativecommons.org/licenses/by-nc-sa/4.0/](https://polyformproject.org/licenses/noncommercial/1.0.0)">PolyForm Noncommercial License 1.0.0</a>
