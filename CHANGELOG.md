@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - README with project information: name, developer, description, main technologies, wiki URL, and basic compilation and execution instructions.
 - README_en: English version of the README file.
-- LICENSE: "Attribution-NonCommercial-ShareAlike 4.0 International" license in plain text.
+- LICENSE
 - Project initialized with `gdx-liftoff` utility (LibGDX project setup).
 - CHANGELOG.md file.
 - `.gitignore` configured for Java/LibGDX projects.
