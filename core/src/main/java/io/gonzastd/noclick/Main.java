@@ -23,15 +23,17 @@ public class Main extends ApplicationAdapter {
         stage = new Stage(new FitViewport(640, 480));
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-        Window window = new Window("Example screen", skin, "border");
+        Window window = new Window("noClick Game", skin, "border");
         window.defaults().pad(4f);
-        window.add("This is a simple Scene2D view.").row();
-        final TextButton button = new TextButton("Click me!", skin);
+        window.add("Please follow the instructions.").row();
+        final TextButton button = new TextButton("Don't click me!", skin);
         button.pad(8f);
         button.addListener(new ChangeListener() {
             @Override
             public void changed(final ChangeEvent event, final Actor actor) {
-                button.setText("Clicked.");
+                button.setText("I told you not!");
+                window.setPosition(MathUtils.random(0, stage.getWidth()),
+                                                MathUtils.random(0, stage.getHeight()));
             }
         });
         window.add(button);
@@ -48,7 +50,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        ScreenUtils.clear(0f, 0f, 0f, 1f);
+        ScreenUtils.clear(42f / 255f, 61f / 255f, 42f / 255f, 1f);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
