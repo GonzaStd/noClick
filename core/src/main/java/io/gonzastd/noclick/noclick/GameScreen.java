@@ -18,7 +18,7 @@ public class GameScreen implements Screen {
         for (MapObject object : carLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                String plate = object.getProperties().get("facing")
+                Facing facing = object.getProperties().get("facing")
             }
         }
     }
