@@ -6,4 +6,11 @@ public enum Facing {
     public String nameLowerCase() {
         return name().toLowerCase();
     }
+
+    public static Facing fromString(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Facing value cannot be null");
+        }
+        return valueOf(value.toUpperCase());
+    }
 }
