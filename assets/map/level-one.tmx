@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="154">
- <tileset firstgid="1" source="../spritesheet/roguelikeCity_transparent.tsx"/>
+ <tileset firstgid="1" source="../sprites/roguelikeCity_transparent.tsx"/>
  <tileset firstgid="1037" name="plant_repack_16x16" tilewidth="16" tileheight="16" tilecount="169" columns="13">
-  <image source="../spritesheet/plant_repack_16x16.png" width="208" height="208"/>
+  <image source="../sprites/plant_repack_16x16.png" width="208" height="208"/>
  </tileset>
  <layer id="2" name="background" width="30" height="30">
   <data encoding="csv">
