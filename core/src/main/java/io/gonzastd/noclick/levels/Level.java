@@ -19,14 +19,14 @@ abstract public class Level implements Disposable {
     private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
     protected SpriteBatch batch;
-    private Array<Drawable> drawables;
+    private final Array<Drawable> drawables;
 
     public Level(String mapPath){
         this.map = new TmxMapLoader().load(mapPath);
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map);
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
-        this.drawables = new Array<Drawable>();
+        this.drawables = new Array<>();
     }
 
     protected void addDrawable(Drawable Drawable) {
