@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.gonzastd.noclick.objects.BasicDrawable;
 
 abstract public class Level implements Disposable {
-    private static final float VIRTUAL_WIDTH = 480f;
-    private static final float VIRTUAL_HEIGHT = 480f;
+    protected static final float VIRTUAL_WIDTH = 480f;
+    protected static final float VIRTUAL_HEIGHT = 480f;
 
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
