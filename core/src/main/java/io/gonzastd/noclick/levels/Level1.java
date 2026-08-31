@@ -1,13 +1,11 @@
 package io.gonzastd.noclick.levels;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.StaticCar;
@@ -23,13 +21,13 @@ class Level1 extends Level {
         Color.DARK_GRAY,
         Color.LIGHT_GRAY
     };
-    private Array<StaticCar> cars;
+    private final Array<StaticCar> cars;
 
     public Level1() {
         super("map/level-one.tmx");
         TiledMap map = super.getMap();
         this.carLayer = map.getLayers().get("cars");
-        this.cars = new Array<StaticCar>();
+        this.cars = new Array<>();
     }
 
     @Override
