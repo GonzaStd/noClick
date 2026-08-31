@@ -28,7 +28,7 @@ public class StaticCar implements Drawable {
         this.bodyTexture = new Texture(SPRITE_RIGHT_BODY);
         this.bodySprite = new Sprite(this.bodyTexture);
         this.bodySprite.setPosition(x, y);
-        this.bodySprite.setColor(color);
+        this.bodySprite.setColor(colorTint);
 
         this.detailsTexture = new Texture(SPRITE_RIGHT_DETAILS);
         this.detailsSprite = new Sprite(this.detailsTexture);
