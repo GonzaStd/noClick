@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.noclick.Constants;
+import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
@@ -45,6 +46,7 @@ class Level1 extends Level {
             }
         }
         super.addDrawables(this.cars);
+        super.addDrawable(new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f));
     }
 
     @Override
