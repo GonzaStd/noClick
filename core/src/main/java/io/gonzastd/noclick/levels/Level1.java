@@ -20,7 +20,8 @@ class Level1 extends Level {
         Color.BLUE,
         Color.GREEN,
         Color.YELLOW,
-        Color.WHITE
+        Color.DARK_GRAY,
+        Color.LIGHT_GRAY
     };
     private Array<StaticCar> cars;
 
