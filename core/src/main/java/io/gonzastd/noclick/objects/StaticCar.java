@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Disposable;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
-public class StaticCar implements Disposable, Drawable {
+public class StaticCar implements Drawable {
     private static final String SPRITE_RIGHT = "sprites/car/car_right.png";
 
     private final Rectangle bounds;
