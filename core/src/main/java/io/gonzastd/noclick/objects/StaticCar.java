@@ -9,10 +9,14 @@ import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
 public class StaticCar implements Drawable {
-    private static final String SPRITE_RIGHT = "sprites/car/car_right.png";
+    private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
+    private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
+
     private final Rectangle bounds;
-    private final Sprite sprite;
-    private final Texture texture;
+    private final Sprite bodySprite;
+    private final Sprite detailsSprite;
+    private final Texture bodyTexture;
+    private final Texture detailsTexture;
 
     public StaticCar(float x, float y, Facing facing, Color color) {
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
@@ -21,26 +25,32 @@ public class StaticCar implements Drawable {
         Vector2 position = new Vector2(x, y);
         Color colorTint = new Color(color);
 
-        this.texture = new Texture(SPRITE_RIGHT);
-        this.sprite = new Sprite(this.texture);
-        this.sprite.setPosition(position.x, position.y);
-        this.sprite.setColor(colorTint);
+        this.bodyTexture = new Texture(SPRITE_RIGHT_BODY);
+        this.bodySprite = new Sprite(this.bodyTexture);
+        this.bodySprite.setPosition(x, y);
+        this.bodySprite.setColor(color);
+
+        this.detailsTexture = new Texture(SPRITE_RIGHT_DETAILS);
+        this.detailsSprite = new Sprite(this.detailsTexture);
+        this.detailsSprite.setPosition(x, y);
 
 
         if (facing == Facing.LEFT) {
-            this.sprite.flip(true, false);
+            this.bodySprite.flip(true, false);
+            this.detailsSprite.flip(true, false);
         }
 
         this.bounds = new Rectangle(
             position.x,
             position.y,
-            this.sprite.getWidth(),
-            this.sprite.getHeight());
+            this.bodySprite.getWidth(),
+            this.bodySprite.getHeight());
 
     }
 
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        bodySprite.draw(batch);
+        detailsSprite.draw(batch);
     }
 
     public Rectangle getBounds() {
@@ -49,6 +59,7 @@ public class StaticCar implements Drawable {
 
     @Override
     public void dispose() {
-        texture.dispose();
+        bodyTexture.dispose();
+        detailsTexture.dispose();
     }
 }
