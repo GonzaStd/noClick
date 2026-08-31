@@ -11,8 +11,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.gonzastd.noclick.objects.Drawable;
 
 abstract public class Level implements Disposable {
+    private static final float VIRTUAL_WIDTH = 480f;
+    private static final float VIRTUAL_HEIGHT = 480f;
+
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
+    private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
     protected SpriteBatch batch;
     private Array<Drawable> drawables;
@@ -76,7 +80,32 @@ abstract public class Level implements Disposable {
 
     abstract public void update(float delta);
 
-    abstract public void resize(int width, int height);
+    public void resize(int width, int height){
+        float virtualAspect = VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
+        float screenAspect = (float) width / (float) height;
+
+        if (screenAspect > virtualAspect) {
+            this.viewportHeight = VIRTUAL_HEIGHT;
+            this.viewportWidth = VIRTUAL_HEIGHT * screenAspect;
+        } else {
+            this.viewportWidth = VIRTUAL_WIDTH;
+            this.viewportHeight = VIRTUAL_WIDTH / screenAspect;
+        }
+
+        this.camera.setToOrtho(false, this.viewportWidth, this.viewportHeight);
+        this.setCameraPosition();
+        this.camera.update();
+    }
+
+    public float getViewportWidth() {
+        return viewportWidth;
+    }
+
+    public float getViewportHeight() {
+        return viewportHeight;
+    }
+
+    abstract protected void setCameraPosition();
 
     @Override
     public void dispose() {
