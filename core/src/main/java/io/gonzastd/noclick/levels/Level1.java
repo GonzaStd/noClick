@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
@@ -38,7 +39,9 @@ class Level1 extends Level {
                 String facingStr = object.getProperties().get("facing").toString();
                 Facing facing = Facing.fromString(facingStr);
                 this.cars.add(
-                    new StaticCar(rect.x, rect.y, facing, this.genColor())
+                    new StaticCar(rect.x + Constants.TILE_SIZE, rect.y, facing, this.genColor())
+                    // The rectangle from the car map object does not start where the sprite starts.
+                    // It has a margin of 1 tile at left and 1 tile at right.
                 );
             }
         }
