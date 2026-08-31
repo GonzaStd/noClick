@@ -47,11 +47,6 @@ class Level1 extends Level {
             }
         }
         super.addDrawables(this.cars);
-
-        super.camera.setToOrtho(false, 480, 480);
-        Vector2 center = new Vector2();
-        new Rectangle(0, 0, 480, 480).getCenter(center);
-        camera.position.set(center.x, center.y, 0);
     }
 
     @Override
@@ -65,14 +60,15 @@ class Level1 extends Level {
         camera.update();
     }
 
+    @Override
+    protected void setCameraPosition() {
+        this.camera.position.set(super.getViewportWidth() / 2f, super.getViewportHeight() / 2f, 0);
+    }
+
     private Color genColor(){
         int index = MathUtils.random(0, CAR_COLORS.length - 1);
         return CAR_COLORS[index];
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
 }
 
