@@ -10,9 +10,7 @@ import io.gonzastd.noclick.objects.attributes.Facing;
 
 public class StaticCar implements Drawable {
     private static final String SPRITE_RIGHT = "sprites/car/car_right.png";
-
     private final Rectangle bounds;
-
     private final Sprite sprite;
     private final Texture texture;
 
