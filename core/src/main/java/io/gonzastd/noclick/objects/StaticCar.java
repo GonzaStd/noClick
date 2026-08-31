@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
-public class StaticCar implements Drawable {
+public class StaticCar implements BasicDrawable {
     private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
     private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
 

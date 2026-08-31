@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import io.gonzastd.noclick.objects.Drawable;
+import io.gonzastd.noclick.objects.BasicDrawable;
 
 abstract public class Level implements Disposable {
     private static final float VIRTUAL_WIDTH = 480f;
@@ -19,7 +19,7 @@ abstract public class Level implements Disposable {
     private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
     protected SpriteBatch batch;
-    private final Array<Drawable> drawables;
+    private final Array<BasicDrawable> drawables;
 
     public Level(String mapPath){
         this.map = new TmxMapLoader().load(mapPath);
@@ -29,18 +29,18 @@ abstract public class Level implements Disposable {
         this.drawables = new Array<>();
     }
 
-    protected void addDrawable(Drawable Drawable) {
-        if (Drawable != null) {
-            this.drawables.add(Drawable);
+    protected void addDrawable(BasicDrawable basicDrawable) {
+        if (basicDrawable != null) {
+            this.drawables.add(basicDrawable);
         }
     }
 
-    protected void addDrawables(Array<? extends Drawable> drawables) {
+    protected void addDrawables(Array<? extends BasicDrawable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                Drawable drawable = drawables.get(i);
-                if (drawable != null) {
-                    this.drawables.add(drawable);
+                BasicDrawable basicDrawable = drawables.get(i);
+                if (basicDrawable != null) {
+                    this.drawables.add(basicDrawable);
                 }
             }
         }
@@ -66,9 +66,9 @@ abstract public class Level implements Disposable {
         batch.begin();
         if (this.drawables != null) {
             for (int i = 0; i < this.drawables.size; i++) {
-                Drawable drawable = this.drawables.get(i);
-                if (drawable != null) {
-                    drawable.draw(this.batch);
+                BasicDrawable basicDrawable = this.drawables.get(i);
+                if (basicDrawable != null) {
+                    basicDrawable.draw(this.batch);
                 }
             }
         }
@@ -113,9 +113,9 @@ abstract public class Level implements Disposable {
         this.map.dispose();
         if (this.drawables != null) {
             for (int i = 0; i < this.drawables.size; i++) {
-                Drawable drawable = this.drawables.get(i);
-                if (drawable != null) {
-                    drawable.dispose();
+                BasicDrawable basicDrawable = this.drawables.get(i);
+                if (basicDrawable != null) {
+                    basicDrawable.dispose();
                 }
             }
         }
