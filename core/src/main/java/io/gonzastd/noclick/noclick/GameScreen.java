@@ -1,55 +1,41 @@
 package io.gonzastd.noclick.noclick;
-
+import io.gonzastd.noclick.levels.Level;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen {
+    private final Level currentLevel;
+
+    public GameScreen(Level level) {
+        this.currentLevel = level;
+    }
 
     @Override
     public void show() {
-        TiledMap map = new TmxMapLoader().load("map/level-one.tmx");
-        MapLayer carLayer = map.getLayers().get("cars");
-
-        for (MapObject object : carLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                Facing facing = object.getProperties().get("facing")
-            }
-        }
+        this.currentLevel.initialize();
     }
 
     @Override
     public void render(float delta) {
-
+        this.currentLevel.update(delta);
+        this.currentLevel.render();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        this.currentLevel.resize(width, height);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
-
+        currentLevel.dispose();
     }
 }
