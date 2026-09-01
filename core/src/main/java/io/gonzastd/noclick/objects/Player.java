@@ -1,29 +1,24 @@
 package io.gonzastd.noclick.objects;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 
-public class Player implements BasicDrawable {
-    private Vector2 position;
-    private Texture sheet;
-    private TextureRegion currentFrame;
+public class Player extends MovableEntity implements BasicDrawable {
 
-    public Player(float x, float y) {
-        this.position = new Vector2(x, y);
-        this.sheet = new Texture("sprites/character_base_16x16.png");
-        this.currentFrame = new TextureRegion(this.sheet, 0, 0, 16, 16);
+    public Player(float startX, float startY) {
+        super(startX, startY, 100f, "sprites/character_base_16x16.png");
     }
 
+    public void handleInput() {
+        float dx = 0;
+        float dy = 0;
 
-    @Override
-    public void draw(SpriteBatch batch) {
-        batch.draw(this.currentFrame, this.position.x, this.position.y);
-    }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) dy += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) dy -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) dx += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) dx -= 1;
 
-    @Override
-    public void dispose() {
-        this.sheet.dispose();
+        move(dx, dy);
     }
 }

@@ -23,6 +23,7 @@ class Level1 extends Level {
         Color.LIGHT_GRAY
     };
     private final Array<StaticCar> cars;
+    private Player player;
 
     public Level1() {
         super("map/level-one.tmx");
@@ -46,18 +47,22 @@ class Level1 extends Level {
             }
         }
         super.addDrawables(this.cars);
-        super.addDrawable(new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f));
+        this.player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
+        super.addDrawable(this.player);
     }
 
     @Override
     public void handleInput() {
-        // TODO: process WASD, E to interact, etc.
+        this.player.handleInput();
     }
 
     @Override
     public void update(float delta) {
         this.handleInput();
-        camera.update();
+        this.player.update(delta);
+
+        this.camera.position.set(player.getPosition().x, player.getPosition().y, 0);
+        this.camera.update();
     }
 
     @Override
