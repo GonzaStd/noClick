@@ -7,9 +7,13 @@ import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 public class Player extends MovableEntity implements BasicDrawable {
 
     public Player(float startX, float startY) {
-        super(startX, startY, 100f, "sprites/character_base_16x16.png");
+        super(
+            startX,
+            startY,
+            100f,
+            "sprites/character_base_16x16.png"
+        );
     }
-
     public void handleInput() {
         float dx = 0;
         float dy = 0;
