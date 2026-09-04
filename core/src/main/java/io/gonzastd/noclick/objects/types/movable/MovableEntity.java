@@ -31,7 +31,8 @@ public abstract class MovableEntity extends BasicDrawable {
     public MovableEntity(
         float startX,
         float startY,
-        float speed, String spritePath,
+        float speed,
+        String spritePath,
         final float SPRITE_WIDTH,
         final float SPRITE_HEIGHT,
         final int HORIZONTAL_SPACING,
