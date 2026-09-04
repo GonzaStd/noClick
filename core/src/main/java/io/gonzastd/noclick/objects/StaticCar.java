@@ -32,7 +32,8 @@ public class StaticCar extends StaticEntity {
             startX,
             startY,
             StaticCar.SPRITE_WIDTH,
-            StaticCar.SPRITE_HEIGHT
+            StaticCar.SPRITE_HEIGHT,
+            facing
         );
 
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
@@ -43,18 +44,14 @@ public class StaticCar extends StaticEntity {
 
         this.bodyTexture = new Texture(SPRITE_RIGHT_BODY);
         this.bodySprite = new Sprite(this.bodyTexture);
-        this.bodySprite.setPosition(startX, startY);
         this.bodySprite.setColor(colorTint);
 
         this.detailsTexture = new Texture(SPRITE_RIGHT_DETAILS);
         this.detailsSprite = new Sprite(this.detailsTexture);
-        this.detailsSprite.setPosition(startX, startY);
 
 
-        if (facing == Facing.LEFT) {
-            this.bodySprite.flip(true, false);
-            this.detailsSprite.flip(true, false);
-        }
+        syncSpritePosition(bodySprite, detailsSprite);
+        checkAndApplyFacingFlip(bodySprite, detailsSprite);
 
         this.bounds = new Rectangle(
             this.getPosition().x,
