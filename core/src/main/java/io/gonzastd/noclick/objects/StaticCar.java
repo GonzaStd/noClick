@@ -57,8 +57,8 @@ public class StaticCar extends StaticEntity {
         }
 
         this.bounds = new Rectangle(
-            position.x,
-            position.y,
+            this.getPosition().x,
+            this.getPosition().y,
             this.bodySprite.getWidth(),
             this.bodySprite.getHeight());
 
