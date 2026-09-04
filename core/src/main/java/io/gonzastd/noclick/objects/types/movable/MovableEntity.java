@@ -106,7 +106,7 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(this.getCurrentFrame(), this.position.x, this.position.y);
+        batch.draw(this.getCurrentFrame(), this.getPosition().x, this.getPosition().y);
     }
 
     public void move(float dx, float dy) {
@@ -131,7 +131,6 @@ public abstract class MovableEntity extends BasicDrawable {
         this.velocity.set(0, 0);
     }
 
-    public Vector2 getPosition() { return position; }
     public MovableState getState() { return state; }
     public MovableDirection getDirection() { return direction; }
 
