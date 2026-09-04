@@ -5,16 +5,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class BasicDrawable {
+    protected final float SPRITE_WIDTH;
+    protected final float SPRITE_HEIGHT;
 
-    protected float spriteWidth;
-    protected float spriteHeight;
     protected Rectangle bounds;
     protected Vector2 position;
 
     public BasicDrawable(float startX, float startY, float width, float height) {
-        this.spriteWidth = width;
-        this.spriteHeight = height;
+        this.SPRITE_WIDTH = width;
+        this.SPRITE_HEIGHT = height;
         this.position = new Vector2(startX, startY);
+        this.bounds = new Rectangle(
+            this.position.x,
+            this.position.y,
+            this.SPRITE_WIDTH,
+            this.SPRITE_HEIGHT
+        );
     }
 
 
