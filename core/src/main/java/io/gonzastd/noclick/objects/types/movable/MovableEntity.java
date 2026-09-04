@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import io.gonzastd.noclick.objects.BasicDrawable;
 
 public abstract class MovableEntity extends BasicDrawable {
-    private final int HORIZONTAL_STRIDE;
-    private final int VERTICAL_STRIDE;
-    private final int FRAMES_PER_MOVE;
-    private final float MOVE_FRAME_DURATION;
+    private final int horizontalStride;
+    private final int verticalStride;
+    private final int framesPerMove;
+    private final float moveFrameDuration;
 
     private Vector2 velocity;
     private float speed;
@@ -33,23 +33,23 @@ public abstract class MovableEntity extends BasicDrawable {
         float startY,
         float speed,
         String spritePath,
-        final float SPRITE_WIDTH,
-        final float SPRITE_HEIGHT,
-        final int HORIZONTAL_SPACING,
-        final int VERTICAL_SPACING,
-        final int FRAMES_PER_MOVE,
-        final float MOVE_FRAME_DURATION
+        final float spriteWidth,
+        final float spriteHeight,
+        final int horizontalSpacing,
+        final int verticalSpacing,
+        final int framesPerMove,
+        final float moveFrameDuration
     ) {
         super(
             startX,
             startY,
-            SPRITE_WIDTH,
-            SPRITE_HEIGHT
+            spriteWidth,
+            spriteHeight
         );
-        this.HORIZONTAL_STRIDE = ( (int) this.SPRITE_WIDTH) + HORIZONTAL_SPACING;
-        this.VERTICAL_STRIDE =  ( (int) this.SPRITE_HEIGHT) + VERTICAL_SPACING;
-        this.FRAMES_PER_MOVE = FRAMES_PER_MOVE;
-        this.MOVE_FRAME_DURATION = MOVE_FRAME_DURATION;
+        this.horizontalStride = ( (int) this.spriteWidth) + horizontalSpacing;
+        this.verticalStride =  ( (int) this.spriteHeight) + verticalSpacing;
+        this.framesPerMove = framesPerMove;
+        this.moveFrameDuration = moveFrameDuration;
 
         this.velocity = new Vector2(0, 0);
         this.speed = speed;
@@ -68,16 +68,16 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     protected Animation<TextureRegion> createMoveAnimation(MovableDirection direction) {
-        TextureRegion[] frames = new TextureRegion[this.FRAMES_PER_MOVE];
+        TextureRegion[] frames = new TextureRegion[this.framesPerMove];
         int row = direction.getSpriteRow();
 
-        for (int column = 0; column < this.FRAMES_PER_MOVE; column++) {
-            int x = column * this.HORIZONTAL_STRIDE;
-            int y = row * this.VERTICAL_STRIDE;
-            frames[column] = new TextureRegion(this.spriteSheet, x, y, this.SPRITE_WIDTH, this.SPRITE_HEIGHT);
+        for (int column = 0; column < this.framesPerMove; column++) {
+            int x = column * this.horizontalStride;
+            int y = row * this.verticalStride;
+            frames[column] = new TextureRegion(this.spriteSheet, x, y, this.spriteWidth, this.spriteHeight);
         }
 
-        Animation<TextureRegion> animation = new Animation<>(MOVE_FRAME_DURATION, frames);
+        Animation<TextureRegion> animation = new Animation<>(moveFrameDuration, frames);
         animation.setPlayMode(Animation.PlayMode.LOOP);
         return animation;
     }

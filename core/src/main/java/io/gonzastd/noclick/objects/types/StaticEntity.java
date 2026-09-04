@@ -5,8 +5,8 @@ import io.gonzastd.noclick.objects.BasicDrawable;
 
 public class StaticEntity extends BasicDrawable {
 
-    public StaticEntity(float startX, float startY, float SPRITE_WIDTH, float SPRITE_HEIGHT) {
-        super(startX, startY, SPRITE_WIDTH, SPRITE_HEIGHT);
+    public StaticEntity(float startX, float startY, float spriteWidth, float spriteHeight) {
+        super(startX, startY, spriteWidth, spriteHeight);
     }
 
     @Override
