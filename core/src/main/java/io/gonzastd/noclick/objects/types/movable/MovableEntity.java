@@ -8,11 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import io.gonzastd.noclick.objects.BasicDrawable;
 
 public abstract class MovableEntity extends BasicDrawable {
-    protected static final int TILE_SIZE = 16;
-    protected static final int SPACING = 0;
-    private static final int STRIDE = TILE_SIZE + SPACING;
-    protected static final int FRAMES_PER_MOVE = 4;
-    protected static final float MOVE_FRAME_DURATION = 0.15f;
+    private final int HORIZONTAL_STRIDE;
+    private final int VERTICAL_STRIDE;
+    private final int FRAMES_PER_MOVE;
+    private final float MOVE_FRAME_DURATION;
 
     private Vector2 velocity;
     private float speed;
@@ -29,14 +28,27 @@ public abstract class MovableEntity extends BasicDrawable {
     protected TextureRegion currentFrame;
     protected Texture spriteSheet;
 
-    public MovableEntity(float startX, float startY, float speed, String spritePath) {
+    public MovableEntity(
+        float startX,
+        float startY,
+        float speed, String spritePath,
+        final float SPRITE_WIDTH,
+        final float SPRITE_HEIGHT,
+        final int HORIZONTAL_SPACING,
+        final int VERTICAL_SPACING,
+        final int FRAMES_PER_MOVE,
+        final float MOVE_FRAME_DURATION
+    ) {
         super(
             startX,
             startY,
-            MovableEntity.TILE_SIZE,
-            MovableEntity.TILE_SIZE
+            SPRITE_WIDTH,
+            SPRITE_HEIGHT
         );
-
+        this.HORIZONTAL_STRIDE = ( (int) this.SPRITE_WIDTH) + HORIZONTAL_SPACING;
+        this.VERTICAL_STRIDE =  ( (int) this.SPRITE_HEIGHT) + VERTICAL_SPACING;
+        this.FRAMES_PER_MOVE = FRAMES_PER_MOVE;
+        this.MOVE_FRAME_DURATION = MOVE_FRAME_DURATION;
 
         this.velocity = new Vector2(0, 0);
         this.speed = speed;
@@ -55,13 +67,13 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     protected Animation<TextureRegion> createMoveAnimation(MovableDirection direction) {
-        TextureRegion[] frames = new TextureRegion[FRAMES_PER_MOVE];
+        TextureRegion[] frames = new TextureRegion[this.FRAMES_PER_MOVE];
         int row = direction.getSpriteRow();
 
-        for (int column = 0; column < FRAMES_PER_MOVE; column++) {
-            int x = column * STRIDE;
-            int y = row * STRIDE;
-            frames[column] = new TextureRegion(this.spriteSheet, x, y, TILE_SIZE, TILE_SIZE);
+        for (int column = 0; column < this.FRAMES_PER_MOVE; column++) {
+            int x = column * this.HORIZONTAL_STRIDE;
+            int y = row * this.VERTICAL_STRIDE;
+            frames[column] = new TextureRegion(this.spriteSheet, x, y, this.SPRITE_WIDTH, this.SPRITE_HEIGHT);
         }
 
         Animation<TextureRegion> animation = new Animation<>(MOVE_FRAME_DURATION, frames);
