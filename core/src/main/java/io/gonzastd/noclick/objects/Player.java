@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 
-public class Player extends MovableEntity implements BasicDrawable {
+public class Player extends MovableEntity {
 
     public Player(float startX, float startY) {
         super(
