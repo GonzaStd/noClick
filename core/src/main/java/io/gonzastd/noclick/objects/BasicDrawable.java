@@ -9,7 +9,7 @@ public abstract class BasicDrawable {
     protected float spriteHeight;
 
     protected Rectangle bounds;
-    protected Vector2 position;
+    private Vector2 position;
 
     public BasicDrawable(float startX, float startY, final float spriteWidth, final float spriteHeight) {
         this.spriteWidth = spriteWidth;
