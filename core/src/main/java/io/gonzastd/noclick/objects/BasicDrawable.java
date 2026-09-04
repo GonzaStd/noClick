@@ -23,13 +23,13 @@ public abstract class BasicDrawable {
         );
     }
 
-
-    public void updateBounds() {
-        bounds.setPosition(position.x, position.y);
-    }
-
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public void setPosition(float x, float y) {
+        this.position.set(x, y);
+        this.bounds.setPosition(x, y);
     }
 
     public Vector2 getPosition() {
