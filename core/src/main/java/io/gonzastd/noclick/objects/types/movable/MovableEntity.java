@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Disposable;
+import io.gonzastd.noclick.objects.BasicDrawable;
 
-public abstract class MovableEntity implements Disposable {
+public abstract class MovableEntity extends BasicDrawable {
     protected static final int TILE_SIZE = 16;
     protected static final int SPACING = 0;
     private static final int STRIDE = TILE_SIZE + SPACING;
     protected static final int FRAMES_PER_MOVE = 4;
     protected static final float MOVE_FRAME_DURATION = 0.15f;
 
-    private Vector2 position;
     private Vector2 velocity;
     private float speed;
 
@@ -31,14 +30,20 @@ public abstract class MovableEntity implements Disposable {
     protected Texture spriteSheet;
 
     public MovableEntity(float startX, float startY, float speed, String spritePath) {
-        this.position = new Vector2(startX, startY);
+        super(
+            startX,
+            startY,
+            MovableEntity.TILE_SIZE,
+            MovableEntity.TILE_SIZE
+        );
+
+
         this.velocity = new Vector2(0, 0);
         this.speed = speed;
         this.state = MovableState.IDLE;
         this.direction = MovableDirection.DOWN;
         this.stateTime = 0f;
-
-        spriteSheet = new Texture(spritePath);
+        this.spriteSheet = new Texture(spritePath);
         this.loadAnimations();
     }
 
