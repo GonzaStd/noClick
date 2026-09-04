@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class BasicDrawable {
-    protected final float SPRITE_WIDTH;
-    protected final float SPRITE_HEIGHT;
+    protected float SPRITE_WIDTH;
+    protected float SPRITE_HEIGHT;
 
     protected Rectangle bounds;
     protected Vector2 position;
