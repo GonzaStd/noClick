@@ -7,8 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.attributes.Facing;
+import io.gonzastd.noclick.objects.types.StaticEntity;
 
-public class StaticCar implements BasicDrawable {
+public class StaticCar extends StaticEntity {
+    protected static final int SPRITE_WIDTH = 48;
+    protected static final int SPRITE_HEIGHT = 32;
+
     private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
     private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
 
@@ -18,21 +22,33 @@ public class StaticCar implements BasicDrawable {
     private final Texture bodyTexture;
     private final Texture detailsTexture;
 
-    public StaticCar(float x, float y, Facing facing, Color color) {
+    public StaticCar(
+        float startX,
+        float startY,
+        Facing facing,
+        Color color
+    ) {
+        super(
+            startX,
+            startY,
+            StaticCar.SPRITE_WIDTH,
+            StaticCar.SPRITE_HEIGHT
+        );
+
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
             throw new IllegalArgumentException("StaticCar only supports horizontal facings for the moment");
         }
-        Vector2 position = new Vector2(x, y);
+
         Color colorTint = new Color(color);
 
         this.bodyTexture = new Texture(SPRITE_RIGHT_BODY);
         this.bodySprite = new Sprite(this.bodyTexture);
-        this.bodySprite.setPosition(x, y);
+        this.bodySprite.setPosition(startX, startY);
         this.bodySprite.setColor(colorTint);
 
         this.detailsTexture = new Texture(SPRITE_RIGHT_DETAILS);
         this.detailsSprite = new Sprite(this.detailsTexture);
-        this.detailsSprite.setPosition(x, y);
+        this.detailsSprite.setPosition(startX, startY);
 
 
         if (facing == Facing.LEFT) {
