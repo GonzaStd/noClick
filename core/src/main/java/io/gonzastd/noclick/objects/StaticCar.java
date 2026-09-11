@@ -65,17 +65,17 @@ public class StaticCar extends StaticEntity {
     }
 
     public void draw(SpriteBatch batch) {
-        bodySprite.draw(batch);
-        detailsSprite.draw(batch);
+        this.bodySprite.draw(batch);
+        this.detailsSprite.draw(batch);
     }
 
     public Rectangle getBounds() {
-        return bounds;
+        return this.bounds;
     }
 
     @Override
     public void dispose() {
-        bodyTexture.dispose();
-        detailsTexture.dispose();
+        this.bodyTexture.dispose();
+        this.detailsTexture.dispose();
     }
 }

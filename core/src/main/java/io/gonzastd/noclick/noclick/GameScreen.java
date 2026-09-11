@@ -36,6 +36,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        currentLevel.dispose();
+        this.currentLevel.dispose();
     }
 }

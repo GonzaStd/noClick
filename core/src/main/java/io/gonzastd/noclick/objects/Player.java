@@ -37,6 +37,6 @@ public class Player extends MovableEntity {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) dx += 1;
         if (Gdx.input.isKeyPressed(Input.Keys.A)) dx -= 1;
 
-        move(dx, dy);
+        this.move(dx, dy);
     }
 }

@@ -11,6 +11,6 @@ public enum LevelFactory {
     }
 
     public Level create() {
-        return supplier.get();
+        return this.supplier.get();
     }
 }

@@ -15,11 +15,11 @@ public enum MovableDirection {
     }
 
     public int getSpriteRow() {
-        return spriteRow;
+        return this.spriteRow;
     }
 
     public int getDegrees() {
-        return degrees;
+        return this.degrees;
     }
 }
 

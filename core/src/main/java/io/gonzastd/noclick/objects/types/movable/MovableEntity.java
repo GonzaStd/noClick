@@ -61,10 +61,10 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     protected void loadAnimations() {
-        moveDownAnim  = createMoveAnimation(MovableDirection.DOWN);
-        moveUpAnim    = createMoveAnimation(MovableDirection.UP);
-        moveLeftAnim  = createMoveAnimation(MovableDirection.LEFT);
-        moveRightAnim = createMoveAnimation(MovableDirection.RIGHT);
+        this.moveDownAnim = this.createMoveAnimation(MovableDirection.DOWN);
+        this.moveUpAnim = this.createMoveAnimation(MovableDirection.UP);
+        this.moveLeftAnim = this.createMoveAnimation(MovableDirection.LEFT);
+        this.moveRightAnim = this.createMoveAnimation(MovableDirection.RIGHT);
     }
 
     protected Animation<TextureRegion> createMoveAnimation(MovableDirection direction) {
@@ -77,7 +77,7 @@ public abstract class MovableEntity extends BasicDrawable {
             frames[column] = new TextureRegion(this.spriteSheet, x, y, this.spriteWidth, this.spriteHeight);
         }
 
-        Animation<TextureRegion> animation = new Animation<>(moveFrameDuration, frames);
+        Animation<TextureRegion> animation = new Animation<>(this.moveFrameDuration, frames);
         animation.setPlayMode(Animation.PlayMode.LOOP);
         return animation;
     }
@@ -91,14 +91,14 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     protected TextureRegion getCurrentFrame() {
-        Animation<TextureRegion> animation = switch (direction) {
+        Animation<TextureRegion> animation = switch (this.direction) {
             case DOWN  -> this.moveDownAnim;
             case UP    -> this.moveUpAnim;
             case LEFT  -> this.moveLeftAnim;
             case RIGHT -> this.moveRightAnim;
         };
 
-        if (state == MovableState.IDLE) {
+        if (this.state == MovableState.IDLE) {
             return animation.getKeyFrame(0, false);
         } else {
             return animation.getKeyFrame(this.stateTime, true);
@@ -117,7 +117,7 @@ public abstract class MovableEntity extends BasicDrawable {
 
         this.state = MovableState.MOVING;
 
-        this.velocity.set(dx, dy).nor().scl(speed); // set distance, normalize and scale
+        this.velocity.set(dx, dy).nor().scl(this.speed); // set distance, normalize and scale
 
         if (Math.abs(dx) > Math.abs(dy)) {
             this.direction = dx > 0 ? MovableDirection.RIGHT : MovableDirection.LEFT;
@@ -131,8 +131,8 @@ public abstract class MovableEntity extends BasicDrawable {
         this.velocity.set(0, 0);
     }
 
-    public MovableState getState() { return state; }
-    public MovableDirection getDirection() { return direction; }
+    public MovableState getState() { return this.state; }
+    public MovableDirection getDirection() { return this.direction; }
 
     @Override
     public void dispose() {

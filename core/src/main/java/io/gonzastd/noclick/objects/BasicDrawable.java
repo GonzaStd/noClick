@@ -24,7 +24,7 @@ public abstract class BasicDrawable {
     }
 
     public Rectangle getBounds() {
-        return bounds;
+        return this.bounds;
     }
 
     public void setPosition(float x, float y) {
@@ -33,7 +33,7 @@ public abstract class BasicDrawable {
     }
 
     public Vector2 getPosition() {
-        return position;
+        return this.position;
     }
 
     public abstract void draw(SpriteBatch batch);

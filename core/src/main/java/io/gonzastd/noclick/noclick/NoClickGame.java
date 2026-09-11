@@ -7,6 +7,6 @@ public class NoClickGame extends Game {
 
     @Override
     public void create() {
-        setScreen(new GameScreen(LevelFactory.PARKING_1.create()));
+        this.setScreen(new GameScreen(LevelFactory.PARKING_1.create()));
     }
 }

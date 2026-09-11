@@ -47,11 +47,11 @@ abstract public class Level implements Disposable {
     }
 
     protected OrthogonalTiledMapRenderer getMapRenderer() {
-        return mapRenderer;
+        return this.mapRenderer;
     }
 
     protected TiledMap getMap() {
-        return map;
+        return this.map;
     }
 
     abstract public void initialize();
@@ -59,11 +59,11 @@ abstract public class Level implements Disposable {
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.15f, 1f);
 
-        mapRenderer.setView(this.camera);
-        mapRenderer.render();
+        this.mapRenderer.setView(this.camera);
+        this.mapRenderer.render();
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        this.batch.setProjectionMatrix(this.camera.combined);
+        this.batch.begin();
         if (this.drawables != null) {
             for (int i = 0; i < this.drawables.size; i++) {
                 BasicDrawable basicDrawable = this.drawables.get(i);
@@ -72,7 +72,7 @@ abstract public class Level implements Disposable {
                 }
             }
         }
-        batch.end();
+        this.batch.end();
 
     }
 
@@ -98,11 +98,11 @@ abstract public class Level implements Disposable {
     }
 
     public float getViewportWidth() {
-        return viewportWidth;
+        return this.viewportWidth;
     }
 
     public float getViewportHeight() {
-        return viewportHeight;
+        return this.viewportHeight;
     }
 
     abstract protected void setCameraPosition();

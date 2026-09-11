@@ -4,7 +4,7 @@ public enum Facing {
     UP, RIGHT, DOWN, LEFT;
 
     public String nameLowerCase() {
-        return name().toLowerCase();
+        return this.name().toLowerCase();
     }
 
     public static Facing fromString(String value) {

@@ -34,7 +34,7 @@ class Level1 extends Level {
 
     @Override
     public void initialize() {
-        for (MapObject object : carLayer.getObjects()) {
+        for (MapObject object : this.carLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 String facingStr = object.getProperties().get("facing").toString();
@@ -61,7 +61,7 @@ class Level1 extends Level {
         this.handleInput();
         this.player.update(delta);
 
-        this.camera.position.set(player.getPosition().x, player.getPosition().y, 0);
+        this.camera.position.set(this.player.getPosition().x, this.player.getPosition().y, 0);
         this.camera.update();
     }
 
