@@ -66,9 +66,6 @@ public class StaticCar extends StaticEntity {
         this.detailsSprite.draw(batch);
     }
 
-    public Rectangle getBounds() {
-        return this.bounds;
-    }
 
     @Override
     public void dispose() {
