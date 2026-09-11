@@ -83,7 +83,13 @@ public abstract class MovableEntity extends BasicDrawable {
     }
 
     public void update(float delta) {
-        this.setPosition(this.velocity.x * delta, this.velocity.y * delta);
+        float traveledDistanceX = this.velocity.x * delta;
+        float traveledDistanceY = this.velocity.y * delta;
+
+        float newPositionX = this.getPosition().x + traveledDistanceX;
+        float newPositionY = this.getPosition().y + traveledDistanceY;
+
+        this.setPosition(newPositionX, newPositionY);
 
         this.stateTime += delta;
 
