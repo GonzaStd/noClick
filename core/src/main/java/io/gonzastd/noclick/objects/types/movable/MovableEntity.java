@@ -74,7 +74,7 @@ public abstract class MovableEntity extends BasicDrawable {
         for (int column = 0; column < this.framesPerMove; column++) {
             int x = column * this.horizontalStride;
             int y = row * this.verticalStride;
-            frames[column] = new TextureRegion(this.spriteSheet, x, y, this.spriteWidth, this.spriteHeight);
+            frames[column] = new TextureRegion(this.spriteSheet, x, y, (int) this.spriteWidth, (int) this.spriteHeight);
         }
 
         Animation<TextureRegion> animation = new Animation<>(this.moveFrameDuration, frames);
