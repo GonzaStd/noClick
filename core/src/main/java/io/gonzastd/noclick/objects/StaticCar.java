@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.StaticEntity;
 
@@ -16,7 +14,6 @@ public class StaticCar extends StaticEntity {
     private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
     private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
 
-    private final Rectangle bounds;
     private final Sprite bodySprite;
     private final Sprite detailsSprite;
     private final Texture bodyTexture;
@@ -52,12 +49,6 @@ public class StaticCar extends StaticEntity {
 
         this.syncSpritePosition(this.bodySprite, this.detailsSprite);
         this.checkAndApplyFacingFlip(this.bodySprite, this.detailsSprite);
-
-        this.bounds = new Rectangle(
-            this.getPosition().x,
-            this.getPosition().y,
-            this.bodySprite.getWidth(),
-            this.bodySprite.getHeight());
 
     }
 
