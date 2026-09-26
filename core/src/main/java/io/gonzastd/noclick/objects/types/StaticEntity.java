@@ -2,6 +2,7 @@ package io.gonzastd.noclick.objects.types;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.BasicDrawable;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
@@ -13,13 +14,17 @@ public class StaticEntity extends BasicDrawable {
         float startY,
         float spriteWidth,
         float spriteHeight,
+        float realWidth,
+        float realHeight,
         Facing facing
     ) {
         super(
             startX,
             startY,
             spriteWidth,
-            spriteHeight
+            spriteHeight,
+            realWidth,
+            realHeight
         );
         this.facing = facing;
 

@@ -8,6 +8,9 @@ public class Player extends MovableEntity {
     protected static final int SPRITE_WIDTH = 16;
     protected static final int SPRITE_HEIGHT = 16;
 
+    public static final int REAL_WIDTH = 12;
+    public static final int REAL_HEIGHT = 16;
+
     protected static final int HORIZONTAL_SPACING = 0;
     protected static final int VERTICAL_SPACING = 0;
 
@@ -22,6 +25,8 @@ public class Player extends MovableEntity {
             "sprites/character_base_16x16.png",
             (float) Player.SPRITE_WIDTH,
             (float) Player.SPRITE_HEIGHT,
+            Player.REAL_WIDTH,
+            Player.REAL_HEIGHT,
             Player.HORIZONTAL_SPACING,
             Player.VERTICAL_SPACING,
             Player.FRAMES_PER_MOVE,

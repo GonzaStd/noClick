@@ -4,12 +4,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.StaticEntity;
 
 public class StaticCar extends StaticEntity {
-    protected static final int SPRITE_WIDTH = 48;
-    protected static final int SPRITE_HEIGHT = 32;
+    protected static final int SPRITE_WIDTH = 3* Constants.TILE_SIZE;
+    protected static final int SPRITE_HEIGHT = 2* Constants.TILE_SIZE;
+
+    protected static final int REAL_WIDTH = 38;
+    protected static final int REAL_HEIGHT = 24;
 
     private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
     private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
@@ -30,6 +35,8 @@ public class StaticCar extends StaticEntity {
             startY,
             StaticCar.SPRITE_WIDTH,
             StaticCar.SPRITE_HEIGHT,
+            StaticCar.REAL_WIDTH,
+            StaticCar.REAL_HEIGHT,
             facing
         );
 
