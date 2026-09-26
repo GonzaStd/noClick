@@ -11,6 +11,7 @@ import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
+import io.gonzastd.noclick.objects.types.DrawableMap;
 
 class Level1 extends Level {
     private final MapLayer carLayer;
@@ -34,6 +35,16 @@ class Level1 extends Level {
 
     @Override
     public void initialize() {
+        DrawableMap drawableMap = new DrawableMap(super.getMapRenderer(),
+            0,
+            Player.REAL_HEIGHT - 1,
+            Level.VIRTUAL_WIDTH,
+            Level.VIRTUAL_HEIGHT,
+            Level.VIRTUAL_WIDTH - Player.REAL_WIDTH,
+            Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
+        );
+        super.addDrawable(drawableMap);
+        final int TILE_SIZE = Constants.TILE_SIZE;
         for (MapObject object : this.carLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
