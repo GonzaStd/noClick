@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.objects.BasicDrawable;
+import io.gonzastd.noclick.objects.types.DrawableMap;
 
 public abstract class MovableEntity extends BasicDrawable {
+    Rectangle bounds;
     private final int horizontalStride;
     private final int verticalStride;
     private final int framesPerMove;
@@ -35,6 +39,8 @@ public abstract class MovableEntity extends BasicDrawable {
         String spritePath,
         final float spriteWidth,
         final float spriteHeight,
+        final float realWidth,
+        final float realHeight,
         final int horizontalSpacing,
         final int verticalSpacing,
         final int framesPerMove,
@@ -44,8 +50,11 @@ public abstract class MovableEntity extends BasicDrawable {
             startX,
             startY,
             spriteWidth,
-            spriteHeight
+            spriteHeight,
+            realWidth,
+            realHeight
         );
+        this.bounds = this.getBounds();
         this.horizontalStride = ( (int) this.spriteWidth) + horizontalSpacing;
         this.verticalStride =  ( (int) this.spriteHeight) + verticalSpacing;
         this.framesPerMove = framesPerMove;
@@ -82,17 +91,57 @@ public abstract class MovableEntity extends BasicDrawable {
         return animation;
     }
 
-    public void update(float delta) {
+    public void update(float delta, Array<? extends BasicDrawable> collidables) {
+        Rectangle bounds = this.getBounds();
         float traveledDistanceX = this.velocity.x * delta;
         float traveledDistanceY = this.velocity.y * delta;
 
-        float newPositionX = this.getPosition().x + traveledDistanceX;
-        float newPositionY = this.getPosition().y + traveledDistanceY;
+        float currentX = this.getPosition().x;
+        float currentY = this.getPosition().y;
 
-        this.setPosition(newPositionX, newPositionY);
+        // --- Eje X ---
+        boolean blockedX = false;
+        if (traveledDistanceX != 0) {
+            this.setPosition(currentX + traveledDistanceX, currentY);
+            for (int i = 0; i < collidables.size; i++) {
+                BasicDrawable other = collidables.get(i);
+                if (other == this) continue;
+                if (other instanceof DrawableMap && !bounds.overlaps(other.getBounds())) {
+                    blockedX = true;
+                    break;
+                }
+                if (bounds.overlaps(other.getBounds()) && !(other instanceof DrawableMap)) {
+                    blockedX = true;
+                    break;
+                }
+            }
+            if (blockedX) {
+                this.setPosition(currentX, currentY); // reverse X
+            }
+        }
+
+        // --- Eje Y ---
+        boolean blockedY = false;
+        if (traveledDistanceY != 0) {
+            this.setPosition(this.getPosition().x, currentY + traveledDistanceY);
+            for (int i = 0; i < collidables.size; i++) {
+                BasicDrawable other = collidables.get(i);
+                if (other == this) continue;
+                if (other instanceof DrawableMap && !bounds.overlaps(other.getBounds())) {
+                    blockedY = true;
+                    break;
+                }
+                if (bounds.overlaps(other.getBounds()) && !(other instanceof DrawableMap)) {
+                    blockedY = true;
+                    break;
+                }
+            }
+            if (blockedY) {
+                this.setPosition(this.getPosition().x, currentY); // reverse Y
+            }
+        }
 
         this.stateTime += delta;
-
         this.currentFrame = this.getCurrentFrame();
     }
 
