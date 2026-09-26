@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.gonzastd.noclick.objects.BasicDrawable;
+import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
     protected static final float VIRTUAL_WIDTH = 480f;
@@ -52,6 +53,15 @@ abstract public class Level implements Disposable {
 
     protected TiledMap getMap() {
         return this.map;
+    }
+
+    protected void updateMovableEntities(float delta) {
+        for (int i = 0; i < this.drawables.size; i++) {
+            BasicDrawable drawable = this.drawables.get(i);
+            if (drawable instanceof MovableEntity movableEntity) {
+                movableEntity.update(delta, this.drawables);
+            }
+        }
     }
 
     abstract public void initialize();

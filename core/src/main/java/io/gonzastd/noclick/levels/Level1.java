@@ -59,7 +59,7 @@ class Level1 extends Level {
     @Override
     public void update(float delta) {
         this.handleInput();
-        this.player.update(delta);
+        this.updateMovableEntities(delta);
 
         this.camera.position.set(this.player.getPosition().x, this.player.getPosition().y, 0);
         this.camera.update();
@@ -76,4 +76,3 @@ class Level1 extends Level {
     }
 
 }
-
