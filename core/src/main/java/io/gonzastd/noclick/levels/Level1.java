@@ -50,8 +50,9 @@ class Level1 extends Level {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 String facingStr = object.getProperties().get("facing").toString();
                 Facing facing = Facing.fromString(facingStr);
+                float carDrawOffsetX = TILE_SIZE;
                 this.cars.add(
-                    new StaticCar(rect.x + Constants.TILE_SIZE, rect.y, facing, this.genColor())
+                    new StaticCar((float)(rect.x + carDrawOffsetX), rect.y, facing, this.genColor())
                     // The rectangle from the car map object does not start where the sprite starts.
                     // It has a margin of 1 tile at left and 1 tile at right.
                 );
