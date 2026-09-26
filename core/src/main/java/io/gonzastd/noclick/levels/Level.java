@@ -70,7 +70,6 @@ abstract public class Level implements Disposable {
         ScreenUtils.clear(0.15f, 0.15f, 0.15f, 1f);
 
         this.mapRenderer.setView(this.camera);
-        this.mapRenderer.render();
 
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
@@ -79,6 +78,7 @@ abstract public class Level implements Disposable {
                 BasicDrawable basicDrawable = this.drawables.get(i);
                 if (basicDrawable != null) {
                     basicDrawable.draw(this.batch);
+                    basicDrawable.drawBounds(this.batch);
                 }
             }
         }
@@ -119,7 +119,6 @@ abstract public class Level implements Disposable {
 
     @Override
     public void dispose() {
-        this.mapRenderer.dispose();
         this.map.dispose();
         if (this.drawables != null) {
             for (int i = 0; i < this.drawables.size; i++) {
