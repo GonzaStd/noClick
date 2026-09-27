@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.noclick.Constants;
+import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
@@ -88,4 +89,13 @@ class Level1 extends Level {
         return CAR_COLORS[index];
     }
 
+    private String genPlate() {
+        Utilities u = new Utilities();
+        StringBuilder plate = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            plate.append(u.genRandomLetter());
+        }
+        plate.append(u.genRandomDigits(3));
+        return plate.toString();
+    }
 }
