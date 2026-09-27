@@ -24,11 +24,14 @@ public class StaticCar extends StaticEntity {
     private final Texture bodyTexture;
     private final Texture detailsTexture;
 
+    private final String plate;
+
     public StaticCar(
         float startX,
         float startY,
         Facing facing,
-        Color color
+        Color color,
+        String plate
     ) {
         super(
             startX,
@@ -39,6 +42,7 @@ public class StaticCar extends StaticEntity {
             StaticCar.REAL_HEIGHT,
             facing
         );
+        this.plate = plate;
 
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
             throw new IllegalArgumentException("StaticCar only supports horizontal facings for the moment");
@@ -69,5 +73,9 @@ public class StaticCar extends StaticEntity {
     public void dispose() {
         this.bodyTexture.dispose();
         this.detailsTexture.dispose();
+    }
+
+    public String getPlate() {
+        return plate;
     }
 }
