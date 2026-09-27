@@ -35,12 +35,13 @@ class Level1 extends Level {
 
     @Override
     public void initialize() {
+        int parkOffsetX = Constants.TILE_SIZE * 8; // You can't go to the park that has 8 meters long.
         DrawableMap drawableMap = new DrawableMap(super.getMapRenderer(),
-            0,
+            - ((float) parkOffsetX / 2),
             Player.REAL_HEIGHT - 1,
             Level.VIRTUAL_WIDTH,
             Level.VIRTUAL_HEIGHT,
-            Level.VIRTUAL_WIDTH - Player.REAL_WIDTH,
+            Level.VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
             Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
         );
         super.addDrawable(drawableMap);
