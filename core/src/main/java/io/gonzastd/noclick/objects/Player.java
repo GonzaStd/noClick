@@ -9,7 +9,7 @@ public class Player extends MovableEntity {
     protected static final int SPRITE_HEIGHT = 16;
 
     public static final int REAL_WIDTH = 12;
-    public static final int REAL_HEIGHT = 16;
+    public static final int REAL_HEIGHT = 7;
 
     protected static final int HORIZONTAL_SPACING = 0;
     protected static final int VERTICAL_SPACING = 0;
