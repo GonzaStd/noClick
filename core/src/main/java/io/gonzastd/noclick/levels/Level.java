@@ -78,7 +78,7 @@ abstract public class Level implements Disposable {
                 BasicDrawable basicDrawable = this.drawables.get(i);
                 if (basicDrawable != null) {
                     basicDrawable.draw(this.batch);
-                    basicDrawable.drawBounds(this.batch);
+                    //basicDrawable.drawBounds(this.batch); // only used for debugging
                 }
             }
         }
