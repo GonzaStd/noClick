@@ -13,6 +13,8 @@ import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.DrawableMap;
+import java.util.HashSet;
+import java.util.Set;
 
 class Level1 extends Level {
     private final MapLayer carLayer;
@@ -47,14 +49,30 @@ class Level1 extends Level {
         );
         super.addDrawable(drawableMap);
         final int TILE_SIZE = Constants.TILE_SIZE;
+        Set<String> plates = new HashSet<>();
+
         for (MapObject object : this.carLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 String facingStr = object.getProperties().get("facing").toString();
                 Facing facing = Facing.fromString(facingStr);
+
+                String newPlate;
+                do {
+                    newPlate = this.genPlate();
+                }
+                while (!plates.add(newPlate)); // this means, create new plate while adding plate to set fails.
+                // it avoids collision (we might miss one plate if it already existed. Birth problem)
+
                 float carDrawOffsetX = TILE_SIZE;
                 this.cars.add(
-                    new StaticCar((float)(rect.x + carDrawOffsetX), rect.y, facing, this.genColor())
+                    new StaticCar(
+                        (float)(rect.x + carDrawOffsetX),
+                        rect.y,
+                        facing,
+                        this.genColor(),
+                        newPlate
+                    )
                     // The rectangle from the car map object does not start where the sprite starts.
                     // It has a margin of 1 tile at left and 1 tile at right.
                 );
