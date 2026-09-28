@@ -89,6 +89,18 @@ class Level1 extends Level {
     @Override
     public void handleInput() {
         this.player.handleInput();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
+            for (MapObject object : this.carLayer.getObjects()) {
+                RectangleMapObject rectMapObject = ((RectangleMapObject) object);
+                if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){
+                    for(StaticCar car : cars){
+                        if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
+                            System.out.println(car.getPlate());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
