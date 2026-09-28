@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.StaticEntity;
@@ -25,13 +24,15 @@ public class StaticCar extends StaticEntity {
     private final Texture detailsTexture;
 
     private final String plate;
+    private final int parkingSlotId;
 
     public StaticCar(
         float startX,
         float startY,
         Facing facing,
         Color color,
-        String plate
+        String plate,
+        int parkingSlotId
     ) {
         super(
             startX,
@@ -43,6 +44,7 @@ public class StaticCar extends StaticEntity {
             facing
         );
         this.plate = plate;
+        this.parkingSlotId = parkingSlotId;
 
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
             throw new IllegalArgumentException("StaticCar only supports horizontal facings for the moment");
@@ -63,6 +65,9 @@ public class StaticCar extends StaticEntity {
 
     }
 
+    public int getParkingSlotId(){
+        return this.parkingSlotId;
+    }
     public void draw(SpriteBatch batch) {
         this.bodySprite.draw(batch);
         this.detailsSprite.draw(batch);
