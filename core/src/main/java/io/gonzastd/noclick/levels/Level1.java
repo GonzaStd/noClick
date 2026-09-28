@@ -1,4 +1,6 @@
 package io.gonzastd.noclick.levels;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -50,10 +52,10 @@ class Level1 extends Level {
         super.addDrawable(drawableMap);
         final int TILE_SIZE = Constants.TILE_SIZE;
         Set<String> plates = new HashSet<>();
-
         for (MapObject object : this.carLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                RectangleMapObject rectMapObject = ((RectangleMapObject) object);
+                Rectangle rect = rectMapObject.getRectangle();
                 String facingStr = object.getProperties().get("facing").toString();
                 Facing facing = Facing.fromString(facingStr);
 
@@ -71,7 +73,8 @@ class Level1 extends Level {
                         rect.y,
                         facing,
                         this.genColor(),
-                        newPlate
+                        newPlate,
+                        (int) rectMapObject.getProperties().get("id")
                     )
                     // The rectangle from the car map object does not start where the sprite starts.
                     // It has a margin of 1 tile at left and 1 tile at right.
