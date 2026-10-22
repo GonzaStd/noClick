@@ -13,12 +13,10 @@ public class Utilities {
         return letters[this.r.nextInt(letters.length)];
     }
 
-    public int genRandomDigits(int numberOfDigits){
+    public String genRandomDigits(int numberOfDigits){
         double n = this.r.nextDouble();
-        return (int) (
-            n * Math.pow(
-                (double)10,
-                (double) numberOfDigits)
-        );
+        int number = (int) (n * Math.pow(10, numberOfDigits));
+
+        return String.format("%03d", number);
     }
 }
