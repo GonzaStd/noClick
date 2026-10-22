@@ -2,7 +2,6 @@ package io.gonzastd.noclick.objects.types;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import io.gonzastd.noclick.objects.BasicDrawable;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
