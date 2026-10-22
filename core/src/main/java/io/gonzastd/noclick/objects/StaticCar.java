@@ -86,6 +86,6 @@ public class StaticCar extends StaticEntity {
     }
 
     public String getPlate() {
-        return plate;
+        return this.plate;
     }
 }

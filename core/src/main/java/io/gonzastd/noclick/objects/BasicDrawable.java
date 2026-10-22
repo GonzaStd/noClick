@@ -30,8 +30,8 @@ public abstract class BasicDrawable implements SimpleDrawable, Disposable {
         this.boundsOffsetY = 0f; // sprite base = bounds base
 
         this.bounds = new Rectangle(
-            startX + boundsOffsetX,
-            startY + boundsOffsetY,
+            startX + this.boundsOffsetX,
+            startY + this.boundsOffsetY,
             realWidth,
             realHeight
         );
@@ -52,7 +52,7 @@ public abstract class BasicDrawable implements SimpleDrawable, Disposable {
 
     public void setPosition(float x, float y) {
         this.position.set(x, y);
-        this.bounds.setPosition(x + boundsOffsetX, y + boundsOffsetY);
+        this.bounds.setPosition(x + this.boundsOffsetX, y + this.boundsOffsetY);
     }
 
     public Vector2 getPosition() {
