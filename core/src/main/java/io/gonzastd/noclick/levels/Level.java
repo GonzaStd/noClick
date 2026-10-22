@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.gonzastd.noclick.objects.BasicDrawable;
 import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 
@@ -19,6 +20,7 @@ abstract public class Level implements Disposable {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
+    private final FitViewport viewport;
     protected SpriteBatch batch;
     private final Array<BasicDrawable> drawables;
 
@@ -27,6 +29,7 @@ abstract public class Level implements Disposable {
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map);
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
+        this.viewport = new FitViewport(480, 480, this.camera);
         this.drawables = new Array<>();
     }
 
@@ -103,6 +106,7 @@ abstract public class Level implements Disposable {
         }
 
         this.camera.setToOrtho(false, this.viewportWidth, this.viewportHeight);
+        this.viewport.update(width, height);
         this.setCameraPosition();
         this.camera.update();
     }
