@@ -2,6 +2,7 @@ package io.gonzastd.noclick.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
+import io.gonzastd.noclick.objects.Message;
 import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.StaticCar;
 import io.gonzastd.noclick.objects.attributes.Facing;
@@ -93,9 +95,17 @@ class Level1 extends Level {
             for (MapObject object : this.carLayer.getObjects()) {
                 RectangleMapObject rectMapObject = ((RectangleMapObject) object);
                 if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){
-                    for(StaticCar car : cars){
+                    for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
                             System.out.println(car.getPlate());
+                            Message plateMessage = new Message(car.getPlate(), 3f, new BitmapFont());
+
+                            plateMessage.setScale(5f);
+                            plateMessage.setBackground(Color.WHITE, 20f);
+                            plateMessage.setTextColor(Color.BLACK);
+                            plateMessage.centerPosition();
+
+                            this.addDrawable(plateMessage);
                         }
                     }
                 }

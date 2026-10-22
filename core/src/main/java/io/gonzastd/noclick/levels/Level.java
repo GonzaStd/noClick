@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import io.gonzastd.noclick.objects.BasicDrawable;
+import io.gonzastd.noclick.objects.SimpleDrawable;
+import io.gonzastd.noclick.objects.Temporary;
 import io.gonzastd.noclick.objects.types.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
@@ -22,7 +24,7 @@ abstract public class Level implements Disposable {
     protected final OrthographicCamera camera;
     private final FitViewport viewport;
     protected SpriteBatch batch;
-    private final Array<BasicDrawable> drawables;
+    private final Array<SimpleDrawable> drawables;
 
     public Level(String mapPath){
         this.map = new TmxMapLoader().load(mapPath);
@@ -33,18 +35,18 @@ abstract public class Level implements Disposable {
         this.drawables = new Array<>();
     }
 
-    protected void addDrawable(BasicDrawable basicDrawable) {
-        if (basicDrawable != null) {
-            this.drawables.add(basicDrawable);
+    protected <T extends SimpleDrawable> void addDrawable(T drawable) {
+        if (drawable != null) {
+            this.drawables.add(drawable);
         }
     }
 
-    protected void addDrawables(Array<? extends BasicDrawable> drawables) {
+    protected void addDrawables(Array<? extends SimpleDrawable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                BasicDrawable basicDrawable = drawables.get(i);
-                if (basicDrawable != null) {
-                    this.drawables.add(basicDrawable);
+                SimpleDrawable drawable = drawables.get(i);
+                if (drawable != null) {
+                    this.drawables.add(drawable);
                 }
             }
         }
@@ -59,10 +61,14 @@ abstract public class Level implements Disposable {
     }
 
     protected void updateMovableEntities(float delta) {
+        Array<BasicDrawable> collidables = new Array<>();
         for (int i = 0; i < this.drawables.size; i++) {
-            BasicDrawable drawable = this.drawables.get(i);
+            SimpleDrawable drawable = this.drawables.get(i);
+            if (drawable instanceof BasicDrawable) {
+                collidables.add((BasicDrawable) drawable);
+            }
             if (drawable instanceof MovableEntity movableEntity) {
-                movableEntity.update(delta, this.drawables);
+                movableEntity.update(delta, collidables);
             }
         }
     }
@@ -78,10 +84,20 @@ abstract public class Level implements Disposable {
         this.batch.begin();
         if (this.drawables != null) {
             for (int i = 0; i < this.drawables.size; i++) {
-                BasicDrawable basicDrawable = this.drawables.get(i);
-                if (basicDrawable != null) {
-                    basicDrawable.draw(this.batch);
-                    //basicDrawable.drawBounds(this.batch); // only used for debugging
+                SimpleDrawable drawable = this.drawables.get(i);
+                if (drawable != null) {
+                    if (drawable instanceof Temporary && ((Temporary) drawable).timer() <= 0) {
+                        drawable.dispose();
+                        this.drawables.removeIndex(i);
+                    } else {
+                        if (
+                            drawable instanceof BasicDrawable ||
+                                (drawable instanceof Temporary && ((Temporary) drawable).timer() > 0)
+                        ) {
+                            drawable.draw(this.batch);
+                        }
+                        //basicDrawable.drawBounds(this.batch); // only used for debugging
+                    }
                 }
             }
         }
@@ -121,17 +137,21 @@ abstract public class Level implements Disposable {
 
     abstract protected void setCameraPosition();
 
-    @Override
-    public void dispose() {
-        this.map.dispose();
-        if (this.drawables != null) {
-            for (int i = 0; i < this.drawables.size; i++) {
-                BasicDrawable basicDrawable = this.drawables.get(i);
-                if (basicDrawable != null) {
-                    basicDrawable.dispose();
+    private void disposeArray(Array<? extends Disposable> disposables){
+        if (disposables != null){
+            for (int i = 0; i < disposables.size; i++) {
+                Disposable disposable = disposables.get(i);
+                if (disposable != null) {
+                    disposable.dispose();
                 }
             }
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.map.dispose();
+        this.disposeArray(this.drawables);
         this.batch.dispose();
     }
 }
