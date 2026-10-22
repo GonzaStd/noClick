@@ -91,7 +91,7 @@ public abstract class MovableEntity extends BasicDrawable {
         return animation;
     }
 
-    public void update(float delta, Array<? extends BasicDrawable> collidables) {
+    public void update(float delta, Array<BasicDrawable> collidables) {
         Rectangle bounds = this.getBounds();
         float traveledDistanceX = this.velocity.x * delta;
         float traveledDistanceY = this.velocity.y * delta;
