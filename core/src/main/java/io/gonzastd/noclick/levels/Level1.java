@@ -99,10 +99,12 @@ class Level1 extends Level {
                         if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
                             Message plateMessage = new Message(car.getPlate(), 3f, new BitmapFont());
 
-                            plateMessage.setScale(5f);
+                            plateMessage.setScale(3f);
                             plateMessage.setBackground(Color.WHITE, 20f);
                             plateMessage.setTextColor(Color.BLACK);
                             plateMessage.centerPosition();
+                            float x = plateMessage.getPosition().x;
+                            plateMessage.setPosition(x, Gdx.graphics.getHeight() - plateMessage.getBoxHeight());
 
                             this.addDrawable(plateMessage);
                         }
