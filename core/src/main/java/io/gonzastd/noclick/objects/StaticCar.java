@@ -43,7 +43,12 @@ public class StaticCar extends StaticEntity {
             StaticCar.REAL_HEIGHT,
             facing
         );
-        this.plate = plate;
+        if (plate.length() != 6) {
+            throw new IllegalArgumentException("Plate should be 6 characters long. It instead it is " + plate.length()
+                + "chars long (" + plate + "), " + this);
+        } else {
+            this.plate = plate;
+        }
         this.parkingSlotId = parkingSlotId;
 
         if (facing != Facing.RIGHT && facing != Facing.LEFT) {
