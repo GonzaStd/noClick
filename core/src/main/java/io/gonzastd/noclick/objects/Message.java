@@ -39,6 +39,14 @@ public class Message extends Temporary {
         this.boxHeight = this.layout.height + this.padding * 2f;
     }
 
+    public float getBoxWidth() {
+        return this.boxWidth;
+    }
+
+    public float getBoxHeight() {
+        return this.boxHeight;
+    }
+
     public void setBackground(Color backgroundColor, float padding) {
         if (this.isCentered) {
             throw new IllegalStateException(
@@ -66,6 +74,10 @@ public class Message extends Temporary {
 
         this.font.getData().setScale(multiplier);
         this.updateBoxSize();
+    }
+
+    public Vector2 getPosition() {
+        return this.position.cpy();
     }
 
     public void setPosition(float x, float y) {
