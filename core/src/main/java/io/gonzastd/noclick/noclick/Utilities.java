@@ -14,7 +14,7 @@ public class Utilities {
     }
 
     public int genRandomDigits(int numberOfDigits){
-        double n = r.nextDouble();
+        double n = this.r.nextDouble();
         return (int) (
             n * Math.pow(
                 (double)10,
