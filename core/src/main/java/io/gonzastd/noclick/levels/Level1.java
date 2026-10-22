@@ -97,7 +97,6 @@ class Level1 extends Level {
                 if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){
                     for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
-                            System.out.println(car.getPlate());
                             Message plateMessage = new Message(car.getPlate(), 3f, new BitmapFont());
 
                             plateMessage.setScale(5f);
