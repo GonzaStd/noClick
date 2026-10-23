@@ -114,11 +114,25 @@ class Level1 extends Level {
         }
     }
 
+    @Override
     public void updateLevel(float delta) {
         this.handleInput();
         this.updateMovableEntities(delta);
 
-        this.camera.position.set(this.player.getPosition().x, this.player.getPosition().y, 0);
+        float pixelsPerUnit = Math.min(
+            (float) Gdx.graphics.getWidth() / this.camera.viewportWidth,
+            (float) Gdx.graphics.getHeight() / this.camera.viewportHeight
+        );
+
+        float cameraX = Math.round(
+            this.player.getPosition().x * pixelsPerUnit
+        ) / pixelsPerUnit;
+
+        float cameraY = Math.round(
+            this.player.getPosition().y * pixelsPerUnit
+        ) / pixelsPerUnit;
+
+        this.camera.position.set(cameraX, cameraY, 0);
         this.camera.update();
     }
 
