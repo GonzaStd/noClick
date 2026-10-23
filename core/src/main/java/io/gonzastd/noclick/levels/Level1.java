@@ -114,8 +114,7 @@ class Level1 extends Level {
         }
     }
 
-    @Override
-    public void update(float delta) {
+    public void updateLevel(float delta) {
         this.handleInput();
         this.updateMovableEntities(delta);
 

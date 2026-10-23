@@ -1,5 +1,6 @@
 package io.gonzastd.noclick.levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -82,32 +83,34 @@ abstract public class Level implements Disposable {
 
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        if (this.drawables != null) {
-            for (int i = 0; i < this.drawables.size; i++) {
-                SimpleDrawable drawable = this.drawables.get(i);
-                if (drawable != null) {
-                    if (drawable instanceof Temporary && ((Temporary) drawable).timer() <= 0) {
-                        drawable.dispose();
-                        this.drawables.removeIndex(i);
-                    } else {
-                        if (
-                            drawable instanceof BasicDrawable ||
-                                (drawable instanceof Temporary && ((Temporary) drawable).timer() > 0)
-                        ) {
-                            drawable.draw(this.batch);
-                        }
-                        //basicDrawable.drawBounds(this.batch); // only used for debugging
-                    }
-                }
-            }
+        for (int i = 0; i < this.drawables.size; i++) {
+            SimpleDrawable drawable = this.drawables.get(i);
+            drawable.draw(this.batch);
         }
-        this.batch.end();
 
+        this.batch.end();
     }
 
     public abstract void handleInput();
 
-    abstract public void update(float delta);
+    abstract public void updateLevel(float delta);
+
+    public void update(float delta) {
+        this.updateLevel(delta);
+        for (int i = 0; i < this.drawables.size; i++) {
+            SimpleDrawable drawable = this.drawables.get(i);
+            if (drawable instanceof Temporary temporary) {
+                temporary.update(Gdx.graphics.getDeltaTime());
+
+                if (temporary.getTime() <= 0) {
+                    drawable.dispose();
+                    this.drawables.removeIndex(i);
+                    i--;
+                }
+            }
+        }
+
+    }
 
     public void resize(int width, int height) {
         this.viewport.update(width, height);
