@@ -119,7 +119,7 @@ class Level1 extends Level {
         this.handleInput();
         this.updateMovableEntities(delta);
 
-        this.camera.position.set(this.player.getPosition().x, this.player.getPosition().y, 0);
+        this.camera.position.set(Math.round(this.player.getPosition().x), Math.round(this.player.getPosition().y), 0);
         this.camera.update();
     }
 
