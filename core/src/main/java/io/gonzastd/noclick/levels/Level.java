@@ -109,19 +109,7 @@ abstract public class Level implements Disposable {
 
     abstract public void update(float delta);
 
-    public void resize(int width, int height){
-        float virtualAspect = VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
-        float screenAspect = (float) width / (float) height;
-
-        if (screenAspect > virtualAspect) {
-            this.viewportHeight = VIRTUAL_HEIGHT;
-            this.viewportWidth = VIRTUAL_HEIGHT * screenAspect;
-        } else {
-            this.viewportWidth = VIRTUAL_WIDTH;
-            this.viewportHeight = VIRTUAL_WIDTH / screenAspect;
-        }
-
-        this.camera.setToOrtho(false, this.viewportWidth, this.viewportHeight);
+    public void resize(int width, int height) {
         this.viewport.update(width, height);
         this.setCameraPosition();
         this.camera.update();
