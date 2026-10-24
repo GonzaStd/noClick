@@ -13,10 +13,11 @@ import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.levels.Level;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
-import io.gonzastd.noclick.objects.types.text.Message;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.collisionable.DrawableMap;
+import io.gonzastd.noclick.objects.types.text.Text;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -93,7 +94,7 @@ public class Level1 extends Level {
                 if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){
                     for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
-                            Message plateMessage = new Message(car.getPlate(), 3f, new BitmapFont());
+                            Text plateMessage = new Text(car.getPlate(), new BitmapFont(), 3f);
 
                             plateMessage.setScale(3f);
                             plateMessage.setBackground(Color.WHITE, 20f);

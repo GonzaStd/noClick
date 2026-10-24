@@ -11,10 +11,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import io.gonzastd.noclick.noclick.DoubleScaling;
+import io.gonzastd.noclick.objects.types.Timerizable;
 import io.gonzastd.noclick.objects.types.collisionable.CollisionalDrawable;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.types.Drawable;
-import io.gonzastd.noclick.objects.types.Temporary;
 import io.gonzastd.noclick.objects.types.collisionable.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
@@ -28,7 +28,7 @@ abstract public class Level implements Disposable {
     protected SpriteBatch batch;
     private final Array<Drawable> drawables;
     private Array<CollisionalDrawable> basicDrawables;
-    private Array<Temporary> temporaries;
+    private Array<Timerizable> temporaries;
 
     protected final Player player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
 
@@ -65,17 +65,19 @@ abstract public class Level implements Disposable {
         }
     }
 
-    protected <T extends Temporary> void addTemporary(T temporary) {
-        if (temporary != null) {
+    protected <T extends Timerizable> void addTemporary(T temporary) {
+        if (temporary.isTemporary()) {
             this.temporaries.add(temporary);
             this.drawables.add(temporary);
+        } else {
+            throw new IllegalCallerException("You should only add a possibleTemporary that in fact IS temporary.");
         }
     }
 
-    protected void addTemporaries(Array<? extends Temporary> temporaries) {
+    protected void addTemporaries(Array<? extends Timerizable> temporaries) {
         if (temporaries != null) {
             for (int i = 0; i < temporaries.size; i++) {
-                Temporary temporary = temporaries.get(i);
+                Timerizable temporary = temporaries.get(i);
                 if (temporary != null) {
                     this.addTemporary(temporary);
                 }
@@ -142,18 +144,18 @@ abstract public class Level implements Disposable {
 
         this.camera.position.set(cameraX, cameraY, 0);
         this.camera.update();
-        for (int i = 0; i < this.drawables.size; i++) {
-            Drawable drawable = this.drawables.get(i);
-            if (drawable instanceof Temporary temporary) {
-                temporary.update(Gdx.graphics.getDeltaTime());
+        if (this.temporaries.size > 0){
+            for (Timerizable temporary : this.temporaries) {
+                temporary.updateTimeLeft(Gdx.graphics.getDeltaTime());
 
-                if (temporary.getTime() <= 0) {
-                    drawable.dispose();
-                    this.drawables.removeIndex(i);
-                    i--;
+                if (temporary.getTimeLeft() <= 0) {
+                    temporary.dispose();
+                    this.drawables.removeValue(temporary, true);
+                    this.temporaries.removeValue(temporary, true);
                 }
             }
         }
+
 
     }
 

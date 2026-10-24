@@ -8,9 +8,14 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import io.gonzastd.noclick.objects.types.Temporary;
+import com.badlogic.gdx.utils.Disposable;
+import io.gonzastd.noclick.objects.types.Drawable;
+import io.gonzastd.noclick.objects.types.Timerizable;
 
-public class Message extends Temporary {
+public class Text implements Drawable, Disposable, Timerizable {
+    private boolean temporary;
+    private float timeLeft;
+
     private final Vector2 position = new Vector2();
     private boolean isPositionDefined = false;
     private boolean isCentered = false;
@@ -27,11 +32,17 @@ public class Message extends Temporary {
     private float boxWidth;
     private float boxHeight;
 
-    public Message(String text, float time, BitmapFont font) {
-        super(time);
+    public Text(String text, BitmapFont font) {
         this.text = text;
         this.font = font;
         this.layout.setText(this.font, this.text);
+    }
+
+    public Text(String text, BitmapFont font, float timeLeft) {
+        this.text = text;
+        this.font = font;
+        this.layout.setText(this.font, this.text);
+        this.setTimeLeft(timeLeft);
     }
 
     private void updateBoxSize() {
@@ -118,7 +129,7 @@ public class Message extends Temporary {
         this.shapeRenderer.end();
     }
 
-    @Override
+
     public void draw(SpriteBatch batch) {
         if (!this.isPositionDefined){
             throw new IllegalStateException(
@@ -145,8 +156,34 @@ public class Message extends Temporary {
         this.font.draw(batch, this.text, this.position.x, this.position.y);
     }
 
-    @Override
     public void dispose() {
         this.shapeRenderer.dispose();
+    }
+
+    // Temporary logic
+    @Override
+    public boolean isTemporary() {
+        return this.temporary;
+    }
+
+    @Override
+    public float getTimeLeft() {
+        if (this.temporary){
+            return this.timeLeft;
+        } else {
+            throw new IllegalCallerException("Time left can only be accessed when text is temporary. " +
+                "Please set your time left before using this method, setting it in constructor or using setTimeLeft().");
+        }
+    }
+
+    @Override
+    public void setTimeLeft(float timeLeft) {
+        this.temporary = true;
+        this.timeLeft = timeLeft;
+    }
+
+    @Override
+    public void updateTimeLeft(float deltaTime) {
+        this.timeLeft -= deltaTime;
     }
 }
