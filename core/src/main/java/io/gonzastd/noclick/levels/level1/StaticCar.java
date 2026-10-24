@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.attributes.Facing;
-import io.gonzastd.noclick.objects.types.collisionable.static_.StaticEntity;
+import io.gonzastd.noclick.objects.types.collidable.static_.StaticEntity;
 
 public class StaticCar extends StaticEntity {
     protected static final int SPRITE_WIDTH = 3* Constants.TILE_SIZE;

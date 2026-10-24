@@ -15,7 +15,7 @@ import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
-import io.gonzastd.noclick.objects.types.collisionable.DrawableMap;
+import io.gonzastd.noclick.objects.types.collidable.DrawableMap;
 import io.gonzastd.noclick.objects.types.text.Text;
 
 import java.util.HashSet;
@@ -51,7 +51,7 @@ public class Level1 extends Level {
             Level.VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
             Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
         );
-        super.addBasicDrawable(drawableMap);
+        super.addCollidable(drawableMap);
         final int TILE_SIZE = Constants.TILE_SIZE;
         Set<String> plates = new HashSet<>();
         for (MapObject object : this.carLayer.getObjects()) {
@@ -83,7 +83,7 @@ public class Level1 extends Level {
                 );
             }
         }
-        super.addBasicDrawables(this.cars);
+        super.addCollidables(this.cars);
     }
 
     @Override

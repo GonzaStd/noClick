@@ -12,10 +12,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import io.gonzastd.noclick.noclick.DoubleScaling;
 import io.gonzastd.noclick.objects.types.Timerizable;
-import io.gonzastd.noclick.objects.types.collisionable.CollisionalDrawable;
+import io.gonzastd.noclick.objects.types.collidable.CollidableDrawable;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.types.Drawable;
-import io.gonzastd.noclick.objects.types.collisionable.movable.MovableEntity;
+import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
     protected static final float VIRTUAL_WIDTH = 480f;
@@ -27,7 +27,7 @@ abstract public class Level implements Disposable {
     private final ScalingViewport viewport;
     protected SpriteBatch batch;
     private final Array<Drawable> drawables;
-    private Array<CollisionalDrawable> basicDrawables;
+    private Array<CollidableDrawable> collidables;
     private Array<Timerizable> temporaries;
 
     protected final Player player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
@@ -44,7 +44,7 @@ abstract public class Level implements Disposable {
             this.camera
         );
         this.drawables = new Array<>();
-        this.basicDrawables = new Array<>();
+        this.collidables = new Array<>();
         this.temporaries = new Array<>();
     }
 
@@ -65,19 +65,19 @@ abstract public class Level implements Disposable {
         }
     }
 
-    protected <T extends CollisionalDrawable> void addBasicDrawable(T drawable) {
+    protected <T extends CollidableDrawable> void addCollidable(T drawable) {
         if (drawable != null) {
-            this.basicDrawables.add(drawable);
+            this.collidables.add(drawable);
             this.drawables.add(drawable);
         }
     }
 
-    protected void addBasicDrawables(Array<? extends CollisionalDrawable> drawables) {
+    protected void addCollidables(Array<? extends CollidableDrawable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                CollisionalDrawable drawable = drawables.get(i);
+                CollidableDrawable drawable = drawables.get(i);
                 if (drawable != null) {
-                    this.addBasicDrawable(drawable);
+                    this.addCollidable(drawable);
                 }
             }
         }
@@ -112,11 +112,11 @@ abstract public class Level implements Disposable {
     }
 
     private void updateMovableEntities(float delta) {
-        for (int i = 0; i < this.basicDrawables.size; i++) {
-            CollisionalDrawable collidable = this.basicDrawables.get(i);
+        for (int i = 0; i < this.collidables.size; i++) {
+            CollidableDrawable collidable = this.collidables.get(i);
             if (collidable instanceof MovableEntity) {
                 MovableEntity movableEntity = (MovableEntity) collidable;
-                movableEntity.update(delta, this.basicDrawables);
+                movableEntity.update(delta, this.collidables);
             }
         }
     }
@@ -125,7 +125,7 @@ abstract public class Level implements Disposable {
 
     public void initialize(){
         this.initializeLevel();
-        this.addBasicDrawable(this.player);
+        this.addCollidable(this.player);
     }
 
     public void render() {

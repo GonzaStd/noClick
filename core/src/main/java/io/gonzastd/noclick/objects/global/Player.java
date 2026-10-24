@@ -2,7 +2,7 @@ package io.gonzastd.noclick.objects.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import io.gonzastd.noclick.objects.types.collisionable.movable.MovableEntity;
+import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
 
 public class Player extends MovableEntity {
     protected static final int SPRITE_WIDTH = 16;

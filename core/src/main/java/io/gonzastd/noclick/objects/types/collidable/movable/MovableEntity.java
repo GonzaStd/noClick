@@ -1,4 +1,4 @@
-package io.gonzastd.noclick.objects.types.collisionable.movable;
+package io.gonzastd.noclick.objects.types.collidable.movable;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import io.gonzastd.noclick.objects.types.collisionable.CollisionalDrawable;
-import io.gonzastd.noclick.objects.types.collisionable.DrawableMap;
+import io.gonzastd.noclick.objects.types.collidable.CollidableDrawable;
+import io.gonzastd.noclick.objects.types.collidable.DrawableMap;
 
-public abstract class MovableEntity extends CollisionalDrawable {
+public abstract class MovableEntity extends CollidableDrawable {
     Rectangle bounds;
     private final int horizontalStride;
     private final int verticalStride;
@@ -91,7 +91,7 @@ public abstract class MovableEntity extends CollisionalDrawable {
         return animation;
     }
 
-    public void update(float delta, Array<CollisionalDrawable> collidables) {
+    public void update(float delta, Array<CollidableDrawable> collidables) {
         Rectangle bounds = this.getBounds();
         float traveledDistanceX = this.velocity.x * delta;
         float traveledDistanceY = this.velocity.y * delta;
@@ -104,7 +104,7 @@ public abstract class MovableEntity extends CollisionalDrawable {
         if (traveledDistanceX != 0) {
             this.setPosition(currentX + traveledDistanceX, currentY);
             for (int i = 0; i < collidables.size; i++) {
-                CollisionalDrawable other = collidables.get(i);
+                CollidableDrawable other = collidables.get(i);
                 if (other == this) continue;
                 if (other instanceof DrawableMap && !bounds.overlaps(other.getBounds())) {
                     blockedX = true;
@@ -125,7 +125,7 @@ public abstract class MovableEntity extends CollisionalDrawable {
         if (traveledDistanceY != 0) {
             this.setPosition(this.getPosition().x, currentY + traveledDistanceY);
             for (int i = 0; i < collidables.size; i++) {
-                CollisionalDrawable other = collidables.get(i);
+                CollidableDrawable other = collidables.get(i);
                 if (other == this) continue;
                 if (other instanceof DrawableMap && !bounds.overlaps(other.getBounds())) {
                     blockedY = true;
