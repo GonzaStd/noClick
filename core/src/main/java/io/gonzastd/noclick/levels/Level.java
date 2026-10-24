@@ -22,7 +22,6 @@ abstract public class Level implements Disposable {
 
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
-    private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
     private final ScalingViewport viewport;
     protected SpriteBatch batch;
@@ -127,16 +126,6 @@ abstract public class Level implements Disposable {
         return (float) this.viewport.getScreenWidth()
             / this.viewport.getWorldWidth();
     }
-
-    public float getViewportWidth() {
-        return this.viewportWidth;
-    }
-
-    public float getViewportHeight() {
-        return this.viewportHeight;
-    }
-
-    abstract protected void setCameraPosition();
 
     private void disposeArray(Array<? extends Disposable> disposables){
         if (disposables != null){
