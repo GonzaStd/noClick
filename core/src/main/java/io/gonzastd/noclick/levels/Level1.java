@@ -31,7 +31,6 @@ class Level1 extends Level {
         Color.LIGHT_GRAY
     };
     private final Array<StaticCar> cars;
-    private Player player;
 
     public Level1() {
         super("map/level-one.tmx");
@@ -41,7 +40,7 @@ class Level1 extends Level {
     }
 
     @Override
-    public void initialize() {
+    protected void initializeLevel() {
         int parkOffsetX = Constants.TILE_SIZE * 8; // You can't go to the park that has 8 meters long.
         DrawableMap drawableMap = new DrawableMap(super.getMapRenderer(),
             - ((float) parkOffsetX / 2),
@@ -51,7 +50,7 @@ class Level1 extends Level {
             Level.VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
             Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
         );
-        super.addDrawable(drawableMap);
+        super.addBasicDrawable(drawableMap);
         final int TILE_SIZE = Constants.TILE_SIZE;
         Set<String> plates = new HashSet<>();
         for (MapObject object : this.carLayer.getObjects()) {
@@ -83,14 +82,11 @@ class Level1 extends Level {
                 );
             }
         }
-        super.addDrawables(this.cars);
-        this.player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
-        super.addDrawable(this.player);
+        super.addBasicDrawables(this.cars);
     }
 
     @Override
-    public void handleInput() {
-        this.player.handleInput();
+    public void handleLevelInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
             for (MapObject object : this.carLayer.getObjects()) {
                 RectangleMapObject rectMapObject = ((RectangleMapObject) object);
@@ -106,31 +102,12 @@ class Level1 extends Level {
                             float x = plateMessage.getPosition().x;
                             plateMessage.setPosition(x, Gdx.graphics.getHeight() - plateMessage.getBoxHeight());
 
-                            this.addDrawable(plateMessage);
+                            this.addTemporary(plateMessage);
                         }
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public void updateLevel(float delta) {
-        this.handleInput();
-        this.updateMovableEntities(delta);
-
-        float pixelsPerUnit = super.getPixelsPerUnit();
-
-        float cameraX = Math.round(
-            this.player.getPosition().x * pixelsPerUnit
-        ) / pixelsPerUnit;
-
-        float cameraY = Math.round(
-            this.player.getPosition().y * pixelsPerUnit
-        ) / pixelsPerUnit;
-
-        this.camera.position.set(cameraX, cameraY, 0);
-        this.camera.update();
     }
 
     private Color genColor(){

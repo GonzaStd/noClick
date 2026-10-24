@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import io.gonzastd.noclick.noclick.DoubleScaling;
 import io.gonzastd.noclick.objects.BasicDrawable;
+import io.gonzastd.noclick.objects.Player;
 import io.gonzastd.noclick.objects.SimpleDrawable;
 import io.gonzastd.noclick.objects.Temporary;
 import io.gonzastd.noclick.objects.types.movable.MovableEntity;
@@ -26,6 +27,10 @@ abstract public class Level implements Disposable {
     private final ScalingViewport viewport;
     protected SpriteBatch batch;
     private final Array<SimpleDrawable> drawables;
+    private Array<BasicDrawable> basicDrawables;
+    private Array<Temporary> temporaries;
+
+    protected final Player player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
 
     public Level(String mapPath){
         this.map = new TmxMapLoader().load(mapPath);
@@ -39,20 +44,40 @@ abstract public class Level implements Disposable {
             this.camera
         );
         this.drawables = new Array<>();
+        this.basicDrawables = new Array<>();
+        this.temporaries = new Array<>();
     }
-
-    protected <T extends SimpleDrawable> void addDrawable(T drawable) {
+    protected <T extends BasicDrawable> void addBasicDrawable(T drawable) {
         if (drawable != null) {
+            this.basicDrawables.add(drawable);
             this.drawables.add(drawable);
         }
     }
 
-    protected void addDrawables(Array<? extends SimpleDrawable> drawables) {
+    protected void addBasicDrawables(Array<? extends BasicDrawable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                SimpleDrawable drawable = drawables.get(i);
+                BasicDrawable drawable = drawables.get(i);
                 if (drawable != null) {
-                    this.drawables.add(drawable);
+                    this.addBasicDrawable(drawable);
+                }
+            }
+        }
+    }
+
+    protected <T extends Temporary> void addTemporary(T temporary) {
+        if (temporary != null) {
+            this.temporaries.add(temporary);
+            this.drawables.add(temporary);
+        }
+    }
+
+    protected void addTemporaries(Array<? extends Temporary> temporaries) {
+        if (temporaries != null) {
+            for (int i = 0; i < temporaries.size; i++) {
+                Temporary temporary = temporaries.get(i);
+                if (temporary != null) {
+                    this.addTemporary(temporary);
                 }
             }
         }
@@ -66,20 +91,22 @@ abstract public class Level implements Disposable {
         return this.map;
     }
 
-    protected void updateMovableEntities(float delta) {
-        Array<BasicDrawable> collidables = new Array<>();
-        for (int i = 0; i < this.drawables.size; i++) {
-            SimpleDrawable drawable = this.drawables.get(i);
-            if (drawable instanceof BasicDrawable) {
-                collidables.add((BasicDrawable) drawable);
-            }
-            if (drawable instanceof MovableEntity movableEntity) {
-                movableEntity.update(delta, collidables);
+    private void updateMovableEntities(float delta) {
+        for (int i = 0; i < this.basicDrawables.size; i++) {
+            BasicDrawable collidable = this.basicDrawables.get(i);
+            if (collidable instanceof MovableEntity) {
+                MovableEntity movableEntity = (MovableEntity) collidable;
+                movableEntity.update(delta, this.basicDrawables);
             }
         }
     }
 
-    abstract public void initialize();
+    abstract protected void initializeLevel();
+
+    public void initialize(){
+        this.initializeLevel();
+        this.addBasicDrawable(this.player);
+    }
 
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.15f, 1f);
@@ -96,12 +123,25 @@ abstract public class Level implements Disposable {
         this.batch.end();
     }
 
-    public abstract void handleInput();
-
-    abstract public void updateLevel(float delta);
+    public abstract void handleLevelInput();
 
     public void update(float delta) {
-        this.updateLevel(delta);
+        this.player.handleInput();
+        this.handleLevelInput();
+        this.updateMovableEntities(delta);
+
+        float pixelsPerUnit = this.getPixelsPerUnit();
+
+        float cameraX = Math.round(
+            this.player.getPosition().x * pixelsPerUnit
+        ) / pixelsPerUnit;
+
+        float cameraY = Math.round(
+            this.player.getPosition().y * pixelsPerUnit
+        ) / pixelsPerUnit;
+
+        this.camera.position.set(cameraX, cameraY, 0);
+        this.camera.update();
         for (int i = 0; i < this.drawables.size; i++) {
             SimpleDrawable drawable = this.drawables.get(i);
             if (drawable instanceof Temporary temporary) {
