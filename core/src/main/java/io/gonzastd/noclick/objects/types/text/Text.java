@@ -137,7 +137,7 @@ public class Text implements Drawable, Disposable, Timerizable {
             );
         }
 
-        OrthographicCamera tempCamera = new OrthographicCamera();
+        OrthographicCamera tempCamera = new OrthographicCamera(); // TODO: Use the main camera instead of creating a new one
         tempCamera.setToOrtho(
             false,
             Gdx.graphics.getWidth(),

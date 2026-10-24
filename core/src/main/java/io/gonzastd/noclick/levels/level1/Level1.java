@@ -51,6 +51,7 @@ public class Level1 extends Level {
             Level.VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
             Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
         );
+        // TODO: Cleanup this mess.
         super.addCollidable(drawableMap);
         final int TILE_SIZE = Constants.TILE_SIZE;
         Set<String> plates = new HashSet<>();
@@ -91,7 +92,7 @@ public class Level1 extends Level {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
             for (MapObject object : this.carLayer.getObjects()) {
                 RectangleMapObject rectMapObject = ((RectangleMapObject) object);
-                if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){
+                if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){ // TODO: Handle collisions other way.
                     for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
                             Text plateMessage = new Text(car.getPlate(), new BitmapFont(), 3f);
