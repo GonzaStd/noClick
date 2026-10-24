@@ -133,12 +133,6 @@ class Level1 extends Level {
         this.camera.update();
     }
 
-    @Override
-    protected void setCameraPosition() {
-        this.camera.position.set(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f, 0);
-        this.camera.update();
-    }
-
     private Color genColor(){
         int index = MathUtils.random(0, CAR_COLORS.length - 1);
         return CAR_COLORS[index];
