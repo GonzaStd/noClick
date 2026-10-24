@@ -2,11 +2,11 @@ package io.gonzastd.noclick.objects.types.text;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import io.gonzastd.noclick.objects.types.Drawable;
@@ -112,7 +112,7 @@ public class Text implements Drawable, Disposable, Timerizable {
     }
 
 
-    private void createBackground(OrthographicCamera tempCamera){
+    private void createBackground(Matrix4 projectionMatrix) {
         if (!this.hasBackground) {
             throw new IllegalStateException("Message background was not defined. Use setBackground().");
         }
@@ -122,7 +122,7 @@ public class Text implements Drawable, Disposable, Timerizable {
         float boxX = this.position.x - this.padding;
         float boxY = this.position.y - this.layout.height - this.padding;
 
-        this.shapeRenderer.setProjectionMatrix(tempCamera.combined);
+        this.shapeRenderer.setProjectionMatrix(projectionMatrix);
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(this.backgroundColor);
         this.shapeRenderer.rect(boxX, boxY, this.boxWidth, this.boxHeight);
@@ -131,29 +131,27 @@ public class Text implements Drawable, Disposable, Timerizable {
 
 
     public void draw(SpriteBatch batch) {
-        if (!this.isPositionDefined){
+        if (!this.isPositionDefined) {
             throw new IllegalStateException(
                 "Message position was not defined. Use centerPosition() or setPosition()."
             );
         }
 
-        OrthographicCamera tempCamera = new OrthographicCamera(); // TODO: Use the main camera instead of creating a new one
-        tempCamera.setToOrtho(
-            false,
-            Gdx.graphics.getWidth(),
-            Gdx.graphics.getHeight()
+        Matrix4 worldProjection = batch.getProjectionMatrix().cpy();
+        Matrix4 screenProjection = new Matrix4().setToOrtho2D(
+            0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
         );
 
+        batch.end();
         if (this.hasBackground) {
-            batch.end();
-            this.createBackground(tempCamera);
-            batch.begin();
-            batch.setProjectionMatrix(tempCamera.combined);
-        } else {
-            batch.setProjectionMatrix(tempCamera.combined);
+            this.createBackground(screenProjection);
         }
+
+        batch.setProjectionMatrix(screenProjection);
+        batch.begin();
         this.font.setColor(this.textColor);
         this.font.draw(batch, this.text, this.position.x, this.position.y);
+        batch.setProjectionMatrix(worldProjection);
     }
 
     public void dispose() {
