@@ -57,7 +57,7 @@ public abstract class Collidable implements Drawable, Disposable {
     }
 
     public Vector2 getPosition() {
-        return this.position;
+        return this.position.cpy();
     }
 
     /** Dibuja el contorno de los bounds con una línea blanca de 1px. */
