@@ -1,4 +1,4 @@
-package io.gonzastd.noclick.objects;
+package io.gonzastd.noclick.objects.types.collisionable;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import io.gonzastd.noclick.objects.types.Drawable;
 
-public abstract class BasicDrawable implements SimpleDrawable, Disposable {
+public abstract class CollisionalDrawable implements Drawable, Disposable {
     protected float spriteWidth;
     protected float spriteHeight;
 
@@ -21,7 +22,7 @@ public abstract class BasicDrawable implements SimpleDrawable, Disposable {
     // Textura compartida de 1x1 blanca para debug
     private static Texture debugPixel;
 
-    public BasicDrawable(float startX, float startY, final float spriteWidth, final float spriteHeight, final float realWidth, final float realHeight) {
+    public CollisionalDrawable(float startX, float startY, final float spriteWidth, final float spriteHeight, final float realWidth, final float realHeight) {
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
         this.position = new Vector2(startX, startY);

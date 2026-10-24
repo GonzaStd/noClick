@@ -1,4 +1,4 @@
-package io.gonzastd.noclick.levels;
+package io.gonzastd.noclick.levels.level1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -10,17 +10,17 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import io.gonzastd.noclick.levels.Level;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
-import io.gonzastd.noclick.objects.Message;
-import io.gonzastd.noclick.objects.Player;
-import io.gonzastd.noclick.objects.StaticCar;
+import io.gonzastd.noclick.objects.types.text.Message;
+import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
-import io.gonzastd.noclick.objects.types.DrawableMap;
+import io.gonzastd.noclick.objects.types.collisionable.DrawableMap;
 import java.util.HashSet;
 import java.util.Set;
 
-class Level1 extends Level {
+public class Level1 extends Level {
     private final MapLayer carLayer;
     private static final Color[] CAR_COLORS = {
         Color.RED,
@@ -86,7 +86,7 @@ class Level1 extends Level {
     }
 
     @Override
-    public void handleLevelInput() {
+    protected void handleLevelInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
             for (MapObject object : this.carLayer.getObjects()) {
                 RectangleMapObject rectMapObject = ((RectangleMapObject) object);

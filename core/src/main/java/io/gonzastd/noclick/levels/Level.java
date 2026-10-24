@@ -11,11 +11,11 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import io.gonzastd.noclick.noclick.DoubleScaling;
-import io.gonzastd.noclick.objects.BasicDrawable;
-import io.gonzastd.noclick.objects.Player;
-import io.gonzastd.noclick.objects.SimpleDrawable;
-import io.gonzastd.noclick.objects.Temporary;
-import io.gonzastd.noclick.objects.types.movable.MovableEntity;
+import io.gonzastd.noclick.objects.types.collisionable.CollisionalDrawable;
+import io.gonzastd.noclick.objects.global.Player;
+import io.gonzastd.noclick.objects.types.Drawable;
+import io.gonzastd.noclick.objects.types.Temporary;
+import io.gonzastd.noclick.objects.types.collisionable.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
     protected static final float VIRTUAL_WIDTH = 480f;
@@ -26,8 +26,8 @@ abstract public class Level implements Disposable {
     protected final OrthographicCamera camera;
     private final ScalingViewport viewport;
     protected SpriteBatch batch;
-    private final Array<SimpleDrawable> drawables;
-    private Array<BasicDrawable> basicDrawables;
+    private final Array<Drawable> drawables;
+    private Array<CollisionalDrawable> basicDrawables;
     private Array<Temporary> temporaries;
 
     protected final Player player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
@@ -47,17 +47,17 @@ abstract public class Level implements Disposable {
         this.basicDrawables = new Array<>();
         this.temporaries = new Array<>();
     }
-    protected <T extends BasicDrawable> void addBasicDrawable(T drawable) {
+    protected <T extends CollisionalDrawable> void addBasicDrawable(T drawable) {
         if (drawable != null) {
             this.basicDrawables.add(drawable);
             this.drawables.add(drawable);
         }
     }
 
-    protected void addBasicDrawables(Array<? extends BasicDrawable> drawables) {
+    protected void addBasicDrawables(Array<? extends CollisionalDrawable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                BasicDrawable drawable = drawables.get(i);
+                CollisionalDrawable drawable = drawables.get(i);
                 if (drawable != null) {
                     this.addBasicDrawable(drawable);
                 }
@@ -93,7 +93,7 @@ abstract public class Level implements Disposable {
 
     private void updateMovableEntities(float delta) {
         for (int i = 0; i < this.basicDrawables.size; i++) {
-            BasicDrawable collidable = this.basicDrawables.get(i);
+            CollisionalDrawable collidable = this.basicDrawables.get(i);
             if (collidable instanceof MovableEntity) {
                 MovableEntity movableEntity = (MovableEntity) collidable;
                 movableEntity.update(delta, this.basicDrawables);
@@ -116,14 +116,14 @@ abstract public class Level implements Disposable {
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
         for (int i = 0; i < this.drawables.size; i++) {
-            SimpleDrawable drawable = this.drawables.get(i);
+            Drawable drawable = this.drawables.get(i);
             drawable.draw(this.batch);
         }
 
         this.batch.end();
     }
 
-    public abstract void handleLevelInput();
+    protected abstract void handleLevelInput();
 
     public void update(float delta) {
         this.player.handleInput();
@@ -143,7 +143,7 @@ abstract public class Level implements Disposable {
         this.camera.position.set(cameraX, cameraY, 0);
         this.camera.update();
         for (int i = 0; i < this.drawables.size; i++) {
-            SimpleDrawable drawable = this.drawables.get(i);
+            Drawable drawable = this.drawables.get(i);
             if (drawable instanceof Temporary temporary) {
                 temporary.update(Gdx.graphics.getDeltaTime());
 

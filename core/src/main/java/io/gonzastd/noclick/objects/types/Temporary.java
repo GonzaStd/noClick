@@ -1,9 +1,9 @@
-package io.gonzastd.noclick.objects;
+package io.gonzastd.noclick.objects.types;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Temporary implements SimpleDrawable, Disposable {
+public abstract class Temporary implements Drawable, Disposable {
     private float time;
 
     public Temporary(float time) {

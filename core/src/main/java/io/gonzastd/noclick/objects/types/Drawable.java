@@ -1,8 +1,8 @@
-package io.gonzastd.noclick.objects;
+package io.gonzastd.noclick.objects.types;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
-public interface SimpleDrawable extends Disposable {
+public interface Drawable extends Disposable {
     void draw(SpriteBatch batch);
 }

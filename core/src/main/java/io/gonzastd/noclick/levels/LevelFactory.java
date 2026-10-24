@@ -1,4 +1,6 @@
 package io.gonzastd.noclick.levels;
+import io.gonzastd.noclick.levels.level1.Level1;
+
 import java.util.function.Supplier;
 
 public enum LevelFactory {

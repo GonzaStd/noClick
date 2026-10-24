@@ -1,9 +1,8 @@
-package io.gonzastd.noclick.objects.types;
+package io.gonzastd.noclick.objects.types.collisionable;
 
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import io.gonzastd.noclick.objects.BasicDrawable;
 
-public class DrawableMap extends BasicDrawable {
+public class DrawableMap extends CollisionalDrawable {
     private final OrthogonalTiledMapRenderer mapRenderer;
 
     public DrawableMap(OrthogonalTiledMapRenderer mapRenderer, float startX, float startY, float spriteWidth, float spriteHeight, float realWidth, float realHeight) {

@@ -1,4 +1,4 @@
-package io.gonzastd.noclick.objects.types.movable;
+package io.gonzastd.noclick.objects.types.collisionable.movable;
 
 public enum MovableDirection {
     DOWN(0, 0),

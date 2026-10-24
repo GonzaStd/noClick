@@ -1,4 +1,4 @@
-package io.gonzastd.noclick.objects;
+package io.gonzastd.noclick.objects.types.text;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import io.gonzastd.noclick.objects.types.Temporary;
 
 public class Message extends Temporary {
     private final Vector2 position = new Vector2();
