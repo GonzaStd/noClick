@@ -119,10 +119,7 @@ class Level1 extends Level {
         this.handleInput();
         this.updateMovableEntities(delta);
 
-        float pixelsPerUnit = Math.min(
-            (float) Gdx.graphics.getWidth() / this.camera.viewportWidth,
-            (float) Gdx.graphics.getHeight() / this.camera.viewportHeight
-        );
+        float pixelsPerUnit = super.getPixelsPerUnit();
 
         float cameraX = Math.round(
             this.player.getPosition().x * pixelsPerUnit
@@ -138,7 +135,8 @@ class Level1 extends Level {
 
     @Override
     protected void setCameraPosition() {
-        this.camera.position.set(super.getViewportWidth() / 2f, super.getViewportHeight() / 2f, 0);
+        this.camera.position.set(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f, 0);
+        this.camera.update();
     }
 
     private Color genColor(){

@@ -9,7 +9,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import io.gonzastd.noclick.noclick.DoubleScaling;
 import io.gonzastd.noclick.objects.BasicDrawable;
 import io.gonzastd.noclick.objects.SimpleDrawable;
 import io.gonzastd.noclick.objects.Temporary;
@@ -23,7 +24,7 @@ abstract public class Level implements Disposable {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private float viewportWidth, viewportHeight;
     protected final OrthographicCamera camera;
-    private final FitViewport viewport;
+    private final ScalingViewport viewport;
     protected SpriteBatch batch;
     private final Array<SimpleDrawable> drawables;
 
@@ -32,7 +33,12 @@ abstract public class Level implements Disposable {
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map);
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(480, 480, this.camera);
+        this.viewport = new ScalingViewport(
+            new DoubleScaling(),
+            VIRTUAL_WIDTH,
+            VIRTUAL_HEIGHT,
+            this.camera
+        );
         this.drawables = new Array<>();
     }
 
@@ -113,9 +119,13 @@ abstract public class Level implements Disposable {
     }
 
     public void resize(int width, int height) {
-        this.viewport.update(width, height);
-        this.setCameraPosition();
+        this.viewport.update(width, height, true);
         this.camera.update();
+    }
+
+    protected float getPixelsPerUnit() {
+        return (float) this.viewport.getScreenWidth()
+            / this.viewport.getWorldWidth();
     }
 
     public float getViewportWidth() {
