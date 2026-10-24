@@ -17,6 +17,6 @@ public class Utilities {
         double n = this.r.nextDouble();
         int number = (int) (n * Math.pow(10, numberOfDigits));
 
-        return String.format("%03d", number);
+        return String.format("%0" + ( (int) numberOfDigits) + "d", number); // cast to int to avoid misuse
     }
 }
