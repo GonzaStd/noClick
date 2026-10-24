@@ -15,7 +15,7 @@ import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
-import io.gonzastd.noclick.objects.types.collidable.DrawableMap;
+import io.gonzastd.noclick.objects.types.collidable.Map;
 import io.gonzastd.noclick.objects.types.text.Text;
 
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public class Level1 extends Level {
     @Override
     protected void initializeLevel() {
         int parkOffsetX = Constants.TILE_SIZE * 8; // You can't go to the park that has 8 meters long.
-        DrawableMap drawableMap = new DrawableMap(super.getMapRenderer(),
+        Map drawableMap = new Map(super.getMapRenderer(),
             - ((float) parkOffsetX / 2),
             Player.REAL_HEIGHT - 1,
             Level.VIRTUAL_WIDTH,

@@ -2,10 +2,10 @@ package io.gonzastd.noclick.objects.types.collidable.static_;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.gonzastd.noclick.objects.types.collidable.CollidableDrawable;
+import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.attributes.Facing;
 
-public class StaticEntity extends CollidableDrawable {
+public class StaticEntity extends Collidable {
     protected Facing facing;
 
     public StaticEntity(

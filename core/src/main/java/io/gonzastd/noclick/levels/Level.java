@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import io.gonzastd.noclick.noclick.DoubleScaling;
 import io.gonzastd.noclick.objects.types.Timerizable;
-import io.gonzastd.noclick.objects.types.collidable.CollidableDrawable;
+import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.types.Drawable;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
@@ -27,7 +27,7 @@ abstract public class Level implements Disposable {
     private final ScalingViewport viewport;
     protected SpriteBatch batch;
     private final Array<Drawable> drawables;
-    private Array<CollidableDrawable> collidables;
+    private Array<Collidable> collidables;
     private Array<Timerizable> temporaries;
 
     protected final Player player = new Player(Level.VIRTUAL_WIDTH / 2f, Level.VIRTUAL_HEIGHT / 2f);
@@ -65,17 +65,17 @@ abstract public class Level implements Disposable {
         }
     }
 
-    protected <T extends CollidableDrawable> void addCollidable(T drawable) {
+    protected <T extends Collidable> void addCollidable(T drawable) {
         if (drawable != null) {
             this.collidables.add(drawable);
             this.drawables.add(drawable);
         }
     }
 
-    protected void addCollidables(Array<? extends CollidableDrawable> drawables) {
+    protected void addCollidables(Array<? extends Collidable> drawables) {
         if (drawables != null) {
             for (int i = 0; i < drawables.size; i++) {
-                CollidableDrawable drawable = drawables.get(i);
+                Collidable drawable = drawables.get(i);
                 if (drawable != null) {
                     this.addCollidable(drawable);
                 }
@@ -113,7 +113,7 @@ abstract public class Level implements Disposable {
 
     private void updateMovableEntities(float delta) {
         for (int i = 0; i < this.collidables.size; i++) {
-            CollidableDrawable collidable = this.collidables.get(i);
+            Collidable collidable = this.collidables.get(i);
             if (collidable instanceof MovableEntity) {
                 MovableEntity movableEntity = (MovableEntity) collidable;
                 movableEntity.update(delta, this.collidables);
