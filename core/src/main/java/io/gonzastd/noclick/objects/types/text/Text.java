@@ -158,6 +158,7 @@ public class Text implements Drawable, Disposable, Timerizable {
 
     public void dispose() {
         this.shapeRenderer.dispose();
+        this.font.dispose();
     }
 
     // Temporary logic
