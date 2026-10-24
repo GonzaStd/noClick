@@ -47,6 +47,24 @@ abstract public class Level implements Disposable {
         this.basicDrawables = new Array<>();
         this.temporaries = new Array<>();
     }
+
+    protected <T extends Drawable> void addDrawable(T drawable) {
+        if (drawable != null) {
+            this.drawables.add(drawable);
+        }
+    }
+
+    protected void addDrawables(Array<? extends Drawable> drawables) {
+        if (drawables != null) {
+            for (int i = 0; i < drawables.size; i++) {
+                Drawable drawable = drawables.get(i);
+                if (drawable != null) {
+                    this.addDrawable(drawable);
+                }
+            }
+        }
+    }
+
     protected <T extends CollisionalDrawable> void addBasicDrawable(T drawable) {
         if (drawable != null) {
             this.basicDrawables.add(drawable);
