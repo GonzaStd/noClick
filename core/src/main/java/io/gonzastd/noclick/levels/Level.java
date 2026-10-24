@@ -164,7 +164,7 @@ abstract public class Level implements Disposable {
         this.camera.update();
         if (this.temporaries.size > 0){
             for (Timerizable temporary : this.temporaries) {
-                temporary.updateTimeLeft(Gdx.graphics.getDeltaTime());
+                temporary.updateTimeLeft(delta);
 
                 if (temporary.getTimeLeft() <= 0) {
                     temporary.dispose();
