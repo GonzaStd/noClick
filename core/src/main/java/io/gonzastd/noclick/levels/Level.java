@@ -1,6 +1,5 @@
 package io.gonzastd.noclick.levels;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,8 +17,8 @@ import io.gonzastd.noclick.objects.types.Drawable;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
 
 abstract public class Level implements Disposable {
-    protected static final float VIRTUAL_WIDTH = 480f;
-    protected static final float VIRTUAL_HEIGHT = 480f;
+    public static final float VIRTUAL_WIDTH = 480f;
+    public static final float VIRTUAL_HEIGHT = 480f;
 
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
@@ -203,5 +202,13 @@ abstract public class Level implements Disposable {
         this.map.dispose();
         this.disposeArray(this.drawables);
         this.batch.dispose();
+    }
+
+    public float getScreenWidth() {
+        return this.viewport.getScreenWidth();
+    }
+
+    public float getScreenHeight() {
+        return this.viewport.getScreenHeight();
     }
 }
