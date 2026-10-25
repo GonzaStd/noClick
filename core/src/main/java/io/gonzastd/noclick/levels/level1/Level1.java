@@ -100,9 +100,9 @@ public class Level1 extends Level {
                             plateMessage.setScale(3f);
                             plateMessage.setBackground(Color.WHITE, 20f);
                             plateMessage.setTextColor(Color.BLACK);
-                            plateMessage.centerPosition();
+                            plateMessage.centerPosition(this.getScreenWidth(), this.getScreenHeight());
                             float x = plateMessage.getPosition().x;
-                            plateMessage.setPosition(x, Gdx.graphics.getHeight() - plateMessage.getBoxHeight());
+                            plateMessage.setPosition(x, this.getScreenHeight() - plateMessage.getBoxHeight());
 
                             this.addTemporary(plateMessage);
                         }

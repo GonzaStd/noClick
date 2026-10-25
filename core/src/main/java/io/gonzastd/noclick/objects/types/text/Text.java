@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import io.gonzastd.noclick.levels.Level;
 import io.gonzastd.noclick.objects.types.Drawable;
 import io.gonzastd.noclick.objects.types.Timerizable;
 
@@ -97,11 +98,11 @@ public class Text implements Drawable, Disposable, Timerizable {
         this.isPositionDefined = true;
     }
 
-    public void centerPosition() {
+    public void centerPosition(float screenWidth, float screenHeight) {
         this.updateBoxSize();
 
-        float x = (Gdx.graphics.getWidth() - this.boxWidth) / 2f;
-        float y = (Gdx.graphics.getHeight() - this.boxHeight) / 2f;
+        float x = (screenWidth - this.boxWidth) / 2f;
+        float y = (screenHeight - this.boxHeight) / 2f;
 
         this.setPosition(
             x + this.padding,
@@ -139,7 +140,7 @@ public class Text implements Drawable, Disposable, Timerizable {
 
         Matrix4 worldProjection = batch.getProjectionMatrix().cpy();
         Matrix4 screenProjection = new Matrix4().setToOrtho2D(
-            0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
+            0, 0, Level.VIRTUAL_WIDTH*2, Level.VIRTUAL_HEIGHT*2 // *2 because of DoubleScaling
         );
 
         batch.end();
