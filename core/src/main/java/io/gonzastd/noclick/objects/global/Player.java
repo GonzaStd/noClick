@@ -5,17 +5,17 @@ import com.badlogic.gdx.Input;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
 
 public class Player extends MovableEntity {
-    protected static final int SPRITE_WIDTH = 16;
-    protected static final int SPRITE_HEIGHT = 16;
+    public static final int SPRITE_WIDTH = 16;
+    public static final int SPRITE_HEIGHT = 16;
 
     public static final int REAL_WIDTH = 12;
     public static final int REAL_HEIGHT = 7;
 
-    protected static final int HORIZONTAL_SPACING = 0;
-    protected static final int VERTICAL_SPACING = 0;
+    public static final int HORIZONTAL_SPACING = 0;
+    public static final int VERTICAL_SPACING = 0;
 
-    protected static final int FRAMES_PER_MOVE = 4;
-    protected static final float MOVE_FRAME_DURATION = 0.15f;
+    public static final int FRAMES_PER_MOVE = 4;
+    public static final float MOVE_FRAME_DURATION = 0.15f;
 
     public Player(float startX, float startY) {
         super(
