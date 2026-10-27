@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import io.gonzastd.noclick.noclick.DoubleScaling;
+import io.gonzastd.noclick.noclick.CustomScaling;
 import io.gonzastd.noclick.objects.types.Timerizable;
 import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.global.Player;
@@ -37,7 +37,7 @@ abstract public class Level implements Disposable {
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
         this.viewport = new ScalingViewport(
-            this.scaling,
+            new CustomScaling(),
             ORIGINAL_VIRTUAL_WIDTH,
             ORIGINAL_VIRTUAL_HEIGHT,
             this.camera
