@@ -2,7 +2,6 @@ package io.gonzastd.noclick.levels.level1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -16,7 +15,6 @@ import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.collidable.Map;
-import io.gonzastd.noclick.objects.types.text.Text;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -90,11 +88,10 @@ public class Level1 extends Level {
     @Override
     protected void handleLevelInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            for (MapObject object : this.carLayer.getObjects()) {
-                RectangleMapObject rectMapObject = ((RectangleMapObject) object);
-                if (this.player.getBounds().overlaps(rectMapObject.getRectangle())){ // TODO: Handle collisions other way.
+            for (MapObject carRegion : this.carLayer.getObjects()) {
+                RectangleMapObject rectangleCarRegion = ((RectangleMapObject) carRegion);
+                if (this.player.getBounds().overlaps(rectangleCarRegion.getRectangle())){ // TODO: Handle collisions other way.
                     for(StaticCar car : this.cars){
-                        if (car.getParkingSlotId() == (int) rectMapObject.getProperties().get("id")){
                             Text plateMessage = new Text(car.getPlate(), new BitmapFont(), 3f);
 
                             plateMessage.setScale(3f);
@@ -105,6 +102,7 @@ public class Level1 extends Level {
                             plateMessage.setPosition(x, this.getScreenHeight() - plateMessage.getBoxHeight());
 
                             this.addTemporary(plateMessage);
+                        if (car.getParkingSlotId() == (int) rectangleCarRegion.getProperties().get("id")){
                         }
                     }
                 }
