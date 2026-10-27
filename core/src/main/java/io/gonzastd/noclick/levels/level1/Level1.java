@@ -92,17 +92,8 @@ public class Level1 extends Level {
                 RectangleMapObject rectangleCarRegion = ((RectangleMapObject) carRegion);
                 if (this.player.getBounds().overlaps(rectangleCarRegion.getRectangle())){ // TODO: Handle collisions other way.
                     for(StaticCar car : this.cars){
-                            Text plateMessage = new Text(car.getPlate(), new BitmapFont(), 3f);
-
-                            plateMessage.setScale(3f);
-                            plateMessage.setBackground(Color.WHITE, 20f);
-                            plateMessage.setTextColor(Color.BLACK);
-                            plateMessage.centerPosition(this.getScreenWidth(), this.getScreenHeight());
-                            float x = plateMessage.getPosition().x;
-                            plateMessage.setPosition(x, this.getScreenHeight() - plateMessage.getBoxHeight());
-
-                            this.addTemporary(plateMessage);
                         if (car.getParkingSlotId() == (int) rectangleCarRegion.getProperties().get("id")){
+                            this.addTemporary(car.makePlateMessage());
                         }
                     }
                 }

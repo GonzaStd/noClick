@@ -204,11 +204,4 @@ abstract public class Level implements Disposable {
         this.batch.dispose();
     }
 
-    public float getScreenWidth() {
-        return this.viewport.getScreenWidth();
-    }
-
-    public float getScreenHeight() {
-        return this.viewport.getScreenHeight();
-    }
 }

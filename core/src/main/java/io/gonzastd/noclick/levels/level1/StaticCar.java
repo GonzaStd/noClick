@@ -2,11 +2,13 @@ package io.gonzastd.noclick.levels.level1;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.collidable.static_.StaticEntity;
+import io.gonzastd.noclick.objects.types.text.Text;
 
 public class StaticCar extends StaticEntity {
     protected static final int SPRITE_WIDTH = 3* Constants.TILE_SIZE;
@@ -87,5 +89,18 @@ public class StaticCar extends StaticEntity {
 
     public String getPlate() {
         return this.plate;
+    }
+
+    public Text makePlateMessage() {
+        Text plateMessage = new Text(this.getPlate(), new BitmapFont(), 2f, 3f);
+
+        plateMessage.createBackground(Color.WHITE, 20f);
+        plateMessage.setTextColor(Color.BLACK);
+        plateMessage.centerPosition();
+
+        float x = plateMessage.getPosition().x;
+        float y = Level1.ORIGINAL_VIRTUAL_HEIGHT - plateMessage.getBoxHeight();
+        plateMessage.setPosition(x, y);
+        return plateMessage;
     }
 }

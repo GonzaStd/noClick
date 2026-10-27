@@ -33,23 +33,25 @@ public class Text implements Drawable, Disposable, Timerizable {
     private float boxWidth;
     private float boxHeight;
 
-    public Text(String text, BitmapFont font) {
+    public Text(String text, BitmapFont font, float textScale) {
         this.text = text;
         this.font = font;
+        if (textScale == 0) {
+            throw new IllegalArgumentException("Text scale cannot be 0");
+        }
+        this.font.getData().setScale(textScale);
         this.layout.setText(this.font, this.text);
     }
 
-    public Text(String text, BitmapFont font, float timeLeft) {
+    public Text(String text, BitmapFont font, float textScale, float timeLeft) {
         this.text = text;
         this.font = font;
+        if (textScale == 0) {
+            throw new IllegalArgumentException("Text scale cannot be 0.");
+        }
+        this.font.getData().setScale(textScale);
         this.layout.setText(this.font, this.text);
         this.setTimeLeft(timeLeft);
-    }
-
-    private void updateBoxSize() {
-        this.layout.setText(this.font, this.text);
-        this.boxWidth = this.layout.width + this.padding * 2f;
-        this.boxHeight = this.layout.height + this.padding * 2f;
     }
 
     public float getBoxWidth() {
@@ -60,33 +62,8 @@ public class Text implements Drawable, Disposable, Timerizable {
         return this.boxHeight;
     }
 
-    public void setBackground(Color backgroundColor, float padding) {
-        if (this.isCentered) {
-            throw new IllegalStateException(
-                "Set the background before centering the message."
-            );
-        }
-
-        this.backgroundColor = backgroundColor;
-        this.padding = padding;
-        this.hasBackground = true;
-
-        this.updateBoxSize();
-    }
-
     public void setTextColor(Color textColor) {
         this.textColor = textColor;
-    }
-
-    public void setScale(float multiplier) {
-        if (this.isCentered) {
-            throw new IllegalStateException(
-                "Set the scale before centering the message."
-            );
-        }
-
-        this.font.getData().setScale(multiplier);
-        this.updateBoxSize();
     }
 
     public Vector2 getPosition() {
@@ -96,33 +73,41 @@ public class Text implements Drawable, Disposable, Timerizable {
     public void setPosition(float x, float y) {
         this.position.set(x, y);
         this.isPositionDefined = true;
+
     }
 
-    public void centerPosition(float screenWidth, float screenHeight) {
-        this.updateBoxSize();
-
-        float x = (screenWidth - this.boxWidth) / 2f;
-        float y = (screenHeight - this.boxHeight) / 2f;
-
+    public void centerPosition() {
+        float xWorldCenter = Level.ORIGINAL_VIRTUAL_WIDTH / 2f;
+        float yWorldCenter = Level.ORIGINAL_VIRTUAL_HEIGHT / 2f;
+        float x = xWorldCenter - (this.boxWidth / 2f);
+        float y = yWorldCenter + this.boxHeight;
         this.setPosition(
-            x + this.padding,
-            y + this.padding + this.layout.height
+            x,
+            y
         );
 
         this.isCentered = true;
     }
 
 
-    private void createBackground(Matrix4 projectionMatrix) {
-        if (!this.hasBackground) {
-            throw new IllegalStateException("Message background was not defined. Use setBackground().");
+    public void createBackground(Color backgroundColor, float padding) {
+        if (this.isCentered) {
+            throw new IllegalStateException(
+                "Set the background before centering the message."
+            );
         }
+
+        this.backgroundColor = backgroundColor;
+        this.padding = padding;
+
         this.boxWidth = this.layout.width + this.padding * 2f;
         this.boxHeight = this.layout.height + this.padding * 2f;
+        this.hasBackground = true;
+    }
 
+    private void drawBackground(Matrix4 projectionMatrix) {
         float boxX = this.position.x - this.padding;
         float boxY = this.position.y - this.layout.height - this.padding;
-
         this.shapeRenderer.setProjectionMatrix(projectionMatrix);
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(this.backgroundColor);
@@ -139,16 +124,16 @@ public class Text implements Drawable, Disposable, Timerizable {
         }
 
         Matrix4 worldProjection = batch.getProjectionMatrix().cpy();
-        Matrix4 screenProjection = new Matrix4().setToOrtho2D(
-            0, 0, Level.VIRTUAL_WIDTH*2, Level.VIRTUAL_HEIGHT*2 // *2 because of DoubleScaling
+        Matrix4 uiProjection = new Matrix4().setToOrtho2D(
+            0, 0, Level.ORIGINAL_VIRTUAL_WIDTH, Level.ORIGINAL_VIRTUAL_HEIGHT
         );
 
         batch.end();
         if (this.hasBackground) {
-            this.createBackground(screenProjection);
+            this.drawBackground(uiProjection);
         }
 
-        batch.setProjectionMatrix(screenProjection);
+        batch.setProjectionMatrix(uiProjection);
         batch.begin();
         this.font.setColor(this.textColor);
         this.font.draw(batch, this.text, this.position.x, this.position.y);
