@@ -44,10 +44,10 @@ public class Level1 extends Level {
         Map drawableMap = new Map(super.getMapRenderer(),
             - ((float) parkOffsetX / 2),
             Player.REAL_HEIGHT - 1,
-            Level.VIRTUAL_WIDTH,
-            Level.VIRTUAL_HEIGHT,
-            Level.VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
-            Level.VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
+            Level.ORIGINAL_VIRTUAL_WIDTH,
+            Level.ORIGINAL_VIRTUAL_HEIGHT,
+            Level.ORIGINAL_VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
+            Level.ORIGINAL_VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
         );
         // TODO: Cleanup this mess.
         super.addCollidable(drawableMap);
