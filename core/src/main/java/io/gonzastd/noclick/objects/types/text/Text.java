@@ -1,6 +1,5 @@
 package io.gonzastd.noclick.objects.types.text;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -8,15 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Disposable;
 import io.gonzastd.noclick.levels.Level;
-import io.gonzastd.noclick.objects.types.Drawable;
 import io.gonzastd.noclick.objects.types.Timerizable;
 
-public class Text implements Drawable, Disposable, Timerizable {
-    private boolean temporary;
-    private float timeLeft;
-
+public class Text extends Timerizable {
     private final Vector2 position = new Vector2();
     private boolean isPositionDefined = false;
     private boolean isCentered = false;
@@ -145,30 +139,4 @@ public class Text implements Drawable, Disposable, Timerizable {
         this.font.dispose();
     }
 
-    // Temporary logic
-    @Override
-    public boolean isTemporary() {
-        return this.temporary;
-    }
-
-    @Override
-    public float getTimeLeft() {
-        if (this.temporary){
-            return this.timeLeft;
-        } else {
-            throw new IllegalCallerException("Time left can only be accessed when text is temporary. " +
-                "Please set your time left before using this method, setting it in constructor or using setTimeLeft().");
-        }
-    }
-
-    @Override
-    public void setTimeLeft(float timeLeft) {
-        this.temporary = true;
-        this.timeLeft = timeLeft;
-    }
-
-    @Override
-    public void updateTimeLeft(float deltaTime) {
-        this.timeLeft -= deltaTime;
-    }
 }
