@@ -1,8 +1,11 @@
 package io.gonzastd.noclick.noclick;
-import io.gonzastd.noclick.levels.Level;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import io.gonzastd.noclick.levels.Level;
 
 public class GameScreen implements Screen {
+
     private final Level currentLevel;
 
     public GameScreen(Level level) {
@@ -11,6 +14,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(null); // Clean last input processor
         this.currentLevel.initialize();
     }
 
