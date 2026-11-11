@@ -7,6 +7,11 @@ public class Utilities {
     public Utilities(){
         this.r = new Random();
     }
+
+    public static boolean isInClosedInterval(int n, int min, int max){ // n ∈ [min, max] ? true/false
+        return n <= min || n >= max;
+    }
+
     public char genRandomLetter() {
         char[] letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
