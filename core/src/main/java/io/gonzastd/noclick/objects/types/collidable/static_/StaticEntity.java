@@ -13,8 +13,8 @@ public class StaticEntity extends Collidable {
         float startY,
         float spriteWidth,
         float spriteHeight,
-        float realWidth,
-        float realHeight,
+        float boxWidth,
+        float boxHeight,
         Facing facing
     ) {
         super(
@@ -22,8 +22,8 @@ public class StaticEntity extends Collidable {
             startY,
             spriteWidth,
             spriteHeight,
-            realWidth,
-            realHeight
+            boxWidth,
+            boxHeight
         );
         this.facing = facing;
 

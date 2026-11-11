@@ -5,8 +5,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 public class Map extends Collidable {
     private final OrthogonalTiledMapRenderer mapRenderer;
 
-    public Map(OrthogonalTiledMapRenderer mapRenderer, float startX, float startY, float spriteWidth, float spriteHeight, float realWidth, float realHeight) {
-        super(startX, startY, spriteWidth, spriteHeight, realWidth, realHeight);
+    public Map(OrthogonalTiledMapRenderer mapRenderer, float startX, float startY, float spriteWidth, float spriteHeight, float boxWidth, float boxHeight) {
+        super(startX, startY, spriteWidth, spriteHeight, boxWidth, boxHeight);
         this.mapRenderer = mapRenderer;
     }
 

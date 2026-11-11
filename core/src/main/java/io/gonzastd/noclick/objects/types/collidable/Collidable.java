@@ -22,19 +22,23 @@ public abstract class Collidable implements Drawable, Disposable {
     // Textura compartida de 1x1 blanca para debug
     private static Texture debugPixel;
 
-    public Collidable(float startX, float startY, final float spriteWidth, final float spriteHeight, final float realWidth, final float realHeight) {
+    public Collidable(
+        float startX, float startY,
+        final float spriteWidth, final float spriteHeight,
+        final float boxWidth, final float boxHeight) {
+
         this.spriteWidth = spriteWidth;
         this.spriteHeight = spriteHeight;
         this.position = new Vector2(startX, startY);
 
-        this.boundsOffsetX = (spriteWidth - realWidth) / 2f;
+        this.boundsOffsetX = (spriteWidth - boxWidth) / 2f;
         this.boundsOffsetY = 0f; // sprite base = bounds base
 
         this.bounds = new Rectangle(
             startX + this.boundsOffsetX,
             startY + this.boundsOffsetY,
-            realWidth,
-            realHeight
+            boxWidth,
+            boxHeight
         );
 
 

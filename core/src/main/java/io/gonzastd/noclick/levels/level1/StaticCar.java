@@ -11,11 +11,11 @@ import io.gonzastd.noclick.objects.types.collidable.static_.StaticEntity;
 import io.gonzastd.noclick.objects.types.text.Text;
 
 public class StaticCar extends StaticEntity {
-    protected static final int SPRITE_WIDTH = 3* Constants.TILE_SIZE;
-    protected static final int SPRITE_HEIGHT = 2* Constants.TILE_SIZE;
+    protected static final int SPRITE_WIDTH = 3* Constants.TILE_SIZE_IN_PIXELS;
+    protected static final int SPRITE_HEIGHT = 2* Constants.TILE_SIZE_IN_PIXELS;
 
-    protected static final int REAL_WIDTH = 38;
-    protected static final int REAL_HEIGHT = 24;
+    protected static final int BOX_WIDTH = 38;
+    protected static final int BOX_HEIGHT = 24;
 
     private static final String SPRITE_RIGHT_BODY = "sprites/car/car_right_body_grayscale.png";
     private static final String SPRITE_RIGHT_DETAILS = "sprites/car/car_right_details.png";
@@ -41,8 +41,8 @@ public class StaticCar extends StaticEntity {
             startY,
             StaticCar.SPRITE_WIDTH,
             StaticCar.SPRITE_HEIGHT,
-            StaticCar.REAL_WIDTH,
-            StaticCar.REAL_HEIGHT,
+            StaticCar.BOX_WIDTH,
+            StaticCar.BOX_HEIGHT,
             facing
         );
         if (plate.length() != 6) {

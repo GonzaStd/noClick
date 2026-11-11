@@ -39,10 +39,10 @@ public abstract class MovableEntity extends Collidable {
         String spritePath,
         final float spriteWidth,
         final float spriteHeight,
-        final float realWidth,
-        final float realHeight,
-        final int horizontalSpacing,
-        final int verticalSpacing,
+        final float boxWidth,
+        final float boxHeight,
+        final int horizontalSpritesheetSpacing, // Space used in spritesheet to separate each frame (sprite)
+        final int verticalSpritesheetSpacing,
         final int framesPerMove,
         final float moveFrameDuration
     ) {
@@ -51,12 +51,12 @@ public abstract class MovableEntity extends Collidable {
             startY,
             spriteWidth,
             spriteHeight,
-            realWidth,
-            realHeight
+            boxWidth,
+            boxHeight
         );
         this.bounds = this.getBounds();
-        this.horizontalStride = ( (int) this.spriteWidth) + horizontalSpacing;
-        this.verticalStride =  ( (int) this.spriteHeight) + verticalSpacing;
+        this.horizontalStride = ( (int) this.spriteWidth) + horizontalSpritesheetSpacing;
+        this.verticalStride =  ( (int) this.spriteHeight) + verticalSpritesheetSpacing;
         this.framesPerMove = framesPerMove;
         this.moveFrameDuration = moveFrameDuration;
 

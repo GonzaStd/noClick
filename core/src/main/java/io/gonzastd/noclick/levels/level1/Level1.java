@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.MathUtils;
@@ -40,45 +41,41 @@ public class Level1 extends Level {
 
     @Override
     protected void initializeLevel() {
-        int parkOffsetX = Constants.TILE_SIZE * 8; // You can't go to the park that has 8 meters long.
+        int parkOffsetX = Constants.TILE_SIZE_IN_PIXELS * 8; // You can't go to the park that is 8 tiles long.
         Map drawableMap = new Map(super.getMapRenderer(),
             - ((float) parkOffsetX / 2),
-            Player.REAL_HEIGHT - 1,
+            Player.BOX_HEIGHT - 1,
             Level.ORIGINAL_VIRTUAL_WIDTH,
             Level.ORIGINAL_VIRTUAL_HEIGHT,
-            Level.ORIGINAL_VIRTUAL_WIDTH - Player.REAL_WIDTH - parkOffsetX,
-            Level.ORIGINAL_VIRTUAL_HEIGHT - Player.REAL_HEIGHT * 2
+            Level.ORIGINAL_VIRTUAL_WIDTH - Player.BOX_WIDTH - parkOffsetX,
+            Level.ORIGINAL_VIRTUAL_HEIGHT - Player.BOX_HEIGHT * 2
         );
-        // TODO: Cleanup this mess.
         super.addCollidable(drawableMap);
-        final int TILE_SIZE = Constants.TILE_SIZE;
+
+        MapObjects parkingSlots = this.carLayer.getObjects();
         Set<String> plates = new HashSet<>();
-        for (MapObject object : this.carLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                RectangleMapObject rectMapObject = ((RectangleMapObject) object);
-                Rectangle rect = rectMapObject.getRectangle();
-                String facingStr = object.getProperties().get("facing").toString();
+        for (MapObject parkingSlot : parkingSlots) {
+            if (parkingSlot instanceof RectangleMapObject parkingSlotRectObj) { // A little check to avoid bad implementation on Tiled.
+                Rectangle parkingSlotRect = parkingSlotRectObj.getRectangle();
+                String facingStr = parkingSlot.getProperties().get("facing").toString();
                 Facing facing = Facing.fromString(facingStr);
-
                 String newPlate;
-                do {
-                    newPlate = this.genPlate();
-                }
-                while (!plates.add(newPlate)); // this means, create new plate while adding plate to set fails.
-                // it avoids collision (we might miss one plate if it already existed. Birth problem)
+                Color newColor;
 
-                float carDrawOffsetX = TILE_SIZE;
+                do { newPlate = this.genPlate(); } // Solves Birth problem
+                while (!plates.add(newPlate)); // Create new plate while adding plate to set fails (because this value already exists).
+                newColor = this.genColor();
+                int parkingSlotId = (int) parkingSlotRectObj.getProperties().get("id");
+
                 this.cars.add(
                     new StaticCar(
-                        (float)(rect.x + carDrawOffsetX),
-                        rect.y,
+                        parkingSlotRect.x + (float) Constants.TILE_SIZE_IN_PIXELS, // TODO: Change parkingSlotRectangle size to car's size on Tiled.
+                        parkingSlotRect.y,
                         facing,
-                        this.genColor(),
+                        newColor,
                         newPlate,
-                        (int) rectMapObject.getProperties().get("id")
+                        parkingSlotId
                     )
-                    // The rectangle from the car map object does not start where the sprite starts.
-                    // It has a margin of 1 tile at left and 1 tile at right.
                 );
             }
         }
