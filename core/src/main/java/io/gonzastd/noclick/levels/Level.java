@@ -33,10 +33,9 @@ abstract public class Level implements Disposable {
     private Array<Collidable> collidables;
     private Array<Timerizable> temporaries;
     private Array<Sound> sounds;
-    private Music backgroundMusic;
+    public Music backgroundMusic;
     private float lastMusicVolume;
     private boolean isMusicMuted = false;
-
 
     protected final Player player = new Player(Level.ORIGINAL_VIRTUAL_WIDTH / 2f, Level.ORIGINAL_VIRTUAL_HEIGHT / 2f);
 

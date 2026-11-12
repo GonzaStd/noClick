@@ -7,6 +7,7 @@ import io.gonzastd.noclick.levels.Level;
 public class GameScreen implements Screen {
 
     private final Level currentLevel;
+    private boolean isMusicPausedByApp = false;
 
     public GameScreen(Level level) {
         this.currentLevel = level;
@@ -30,10 +31,20 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        if (this.currentLevel.backgroundMusic != null && this.currentLevel.backgroundMusic.isPlaying()) {
+            this.currentLevel.backgroundMusic.pause();
+            this.isMusicPausedByApp = true;
+        }
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        if (this.currentLevel.backgroundMusic != null && this.isMusicPausedByApp) {
+            this.currentLevel.backgroundMusic.play();
+            this.isMusicPausedByApp = false;
+        }
+    }
 
     @Override
     public void hide() {}
