@@ -21,7 +21,7 @@ public class Player extends MovableEntity {
         super(
             startX,
             startY,
-            100f,
+            60f,
             "sprites/character_base_16x16.png",
             (float) Player.SPRITE_WIDTH,
             (float) Player.SPRITE_HEIGHT,

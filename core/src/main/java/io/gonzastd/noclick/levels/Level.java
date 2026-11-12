@@ -1,5 +1,6 @@
 package io.gonzastd.noclick.levels;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,6 +29,8 @@ abstract public class Level implements Disposable {
     private final Array<Drawable> drawables;
     private Array<Collidable> collidables;
     private Array<Timerizable> temporaries;
+    private Array<Sound> sounds;
+
 
     protected final Player player = new Player(Level.ORIGINAL_VIRTUAL_WIDTH / 2f, Level.ORIGINAL_VIRTUAL_HEIGHT / 2f);
 
@@ -45,6 +48,19 @@ abstract public class Level implements Disposable {
         this.drawables = new Array<>();
         this.collidables = new Array<>();
         this.temporaries = new Array<>();
+        this.sounds = new Array<>();
+    }
+
+    protected <T extends Sound> void addSound(T sound) {
+        if (sound != null) {
+            this.sounds.add(sound);
+        }
+    }
+
+    protected void addSounds(Array<Sound> sounds) {
+        for (Sound sound : sounds) {
+            this.addSound(sound);
+        }
     }
 
     protected <T extends Drawable> void addDrawable(T drawable) {
@@ -201,6 +217,7 @@ abstract public class Level implements Disposable {
     public void dispose() {
         this.map.dispose();
         this.disposeArray(this.drawables);
+        this.disposeArray(this.sounds);
         this.batch.dispose();
     }
 

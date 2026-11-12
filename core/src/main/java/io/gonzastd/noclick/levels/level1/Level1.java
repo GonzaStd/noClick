@@ -1,6 +1,7 @@
 package io.gonzastd.noclick.levels.level1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -23,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Level1 extends Level {
+    private Sound popSound;
     private final MapLayer carLayer;
     private static final Color[] CAR_COLORS = {
         Color.RED,
@@ -43,6 +45,8 @@ public class Level1 extends Level {
 
     @Override
     protected void initializeLevel() {
+        this.popSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.ogg"));
+        this.addSound(this.popSound);
         int parkOffsetX = Constants.TILE_SIZE_IN_PIXELS * 8; // You can't go to the park that is 8 tiles long.
         Map drawableMap = new Map(super.getMapRenderer(),
             - ((float) parkOffsetX / 2),
@@ -92,6 +96,7 @@ public class Level1 extends Level {
                 if (this.player.getBounds().overlaps(rectangleCarRegion.getRectangle())){ // TODO: Handle collisions other way.
                     for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectangleCarRegion.getProperties().get("id")){
+                            this.popSound.play();
                             this.addTemporary(car.makePlateMessage());
                             Symbol lastSeenSymbol = getLastSeenSymbol(car);
                             this.addTemporary(lastSeenSymbol);
