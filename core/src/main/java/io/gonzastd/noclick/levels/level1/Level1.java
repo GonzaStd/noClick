@@ -10,12 +10,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import io.gonzastd.noclick.assets.ui.UiTextureRegionsTable;
 import io.gonzastd.noclick.levels.Level;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.collidable.Map;
+import io.gonzastd.noclick.objects.ui.Symbol;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -91,11 +93,29 @@ public class Level1 extends Level {
                     for(StaticCar car : this.cars){
                         if (car.getParkingSlotId() == (int) rectangleCarRegion.getProperties().get("id")){
                             this.addTemporary(car.makePlateMessage());
+                            Symbol lastSeenSymbol = getLastSeenSymbol(car);
+                            this.addTemporary(lastSeenSymbol);
                         }
                     }
                 }
             }
         }
+    }
+
+    private static Symbol getLastSeenSymbol(StaticCar car) {
+        float HeightOfPlatePortionOfCar = (float) StaticCar.BOX_HEIGHT / 4;
+        float symbolDistanceX = 14f;
+
+        float symbolPositionX = 0;
+        float symbolPositionY = car.getPosition().y + (HeightOfPlatePortionOfCar);
+        if (car.getFacing() == Facing.LEFT){
+            symbolPositionX = car.getPosition().x - symbolDistanceX;
+        } else if (car.getFacing() == Facing.RIGHT){
+            symbolPositionX = car.getPosition().x + symbolDistanceX + StaticCar.BOX_WIDTH;
+        }
+        Symbol newSymbol = new Symbol(UiTextureRegionsTable.EYE, symbolPositionX, symbolPositionY);
+        newSymbol.setTimeLeft(2f);
+        return newSymbol;
     }
 
     private Color genColor(){
