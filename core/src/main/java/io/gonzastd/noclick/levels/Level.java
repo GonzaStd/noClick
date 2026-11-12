@@ -33,7 +33,8 @@ abstract public class Level implements Disposable {
     private Array<Collidable> collidables;
     private Array<Timerizable> temporaries;
     private Array<Sound> sounds;
-    public Music backgroundMusic;
+    private String backgroundMusicPath;
+    public Music backgroundMusic = null;
     private float lastMusicVolume;
     private boolean isMusicMuted = false;
 
@@ -57,13 +58,15 @@ abstract public class Level implements Disposable {
     }
 
     private void toggleMuteMusic() {
-        if  (this.isMusicMuted) {
-            this.backgroundMusic.setVolume(this.lastMusicVolume);
-            this.isMusicMuted = false;
-        } else {
-            this.lastMusicVolume = this.backgroundMusic.getVolume();
-            this.backgroundMusic.setVolume(0f);
-            this.isMusicMuted = true;
+        if (this.backgroundMusic != null) {
+            if (this.isMusicMuted) {
+                this.backgroundMusic.setVolume(this.lastMusicVolume);
+                this.isMusicMuted = false;
+            } else {
+                this.lastMusicVolume = this.backgroundMusic.getVolume();
+                this.backgroundMusic.setVolume(0f);
+                this.isMusicMuted = true;
+            }
         }
     }
 
@@ -154,12 +157,18 @@ abstract public class Level implements Disposable {
 
     abstract protected void initializeLevel();
 
+    protected void setBackgroundMusicPath(String musicPath) {
+        this.backgroundMusicPath = musicPath;
+    }
+
     public void initialize(){
         this.initializeLevel();
-        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/day_in_the_park.mp3"));
-        this.backgroundMusic.setLooping(true);
-        this.backgroundMusic.setVolume(0.5f);
-        this.backgroundMusic.play();
+        if (this.backgroundMusicPath != null) {
+            this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(this.backgroundMusicPath));
+            this.backgroundMusic.setLooping(true);
+            this.backgroundMusic.setVolume(0.5f);
+            this.backgroundMusic.play();
+        }
         this.addCollidable(this.player);
     }
 

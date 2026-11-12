@@ -45,6 +45,7 @@ public class Level1 extends Level {
 
     @Override
     protected void initializeLevel() {
+        this.setBackgroundMusicPath("music/day_in_the_park.mp3");
         this.popSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.ogg"));
         this.addSound(this.popSound);
         int parkOffsetX = Constants.TILE_SIZE_IN_PIXELS * 8; // You can't go to the park that is 8 tiles long.
