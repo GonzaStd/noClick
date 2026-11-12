@@ -1,5 +1,8 @@
 package io.gonzastd.noclick.levels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,6 +33,9 @@ abstract public class Level implements Disposable {
     private Array<Collidable> collidables;
     private Array<Timerizable> temporaries;
     private Array<Sound> sounds;
+    private Music backgroundMusic;
+    private float lastMusicVolume;
+    private boolean isMusicMuted = false;
 
 
     protected final Player player = new Player(Level.ORIGINAL_VIRTUAL_WIDTH / 2f, Level.ORIGINAL_VIRTUAL_HEIGHT / 2f);
@@ -49,6 +55,17 @@ abstract public class Level implements Disposable {
         this.collidables = new Array<>();
         this.temporaries = new Array<>();
         this.sounds = new Array<>();
+    }
+
+    private void toggleMuteMusic() {
+        if  (this.isMusicMuted) {
+            this.backgroundMusic.setVolume(this.lastMusicVolume);
+            this.isMusicMuted = false;
+        } else {
+            this.lastMusicVolume = this.backgroundMusic.getVolume();
+            this.backgroundMusic.setVolume(0f);
+            this.isMusicMuted = true;
+        }
     }
 
     protected <T extends Sound> void addSound(T sound) {
@@ -140,6 +157,10 @@ abstract public class Level implements Disposable {
 
     public void initialize(){
         this.initializeLevel();
+        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/day_in_the_park.mp3"));
+        this.backgroundMusic.setLooping(true);
+        this.backgroundMusic.setVolume(0.5f);
+        this.backgroundMusic.play();
         this.addCollidable(this.player);
     }
 
@@ -161,6 +182,9 @@ abstract public class Level implements Disposable {
     protected abstract void handleLevelInput();
 
     public void update(float delta) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
+            this.toggleMuteMusic();
+        }
         this.player.handleInput();
         this.handleLevelInput();
         this.updateMovableEntities(delta);
@@ -218,6 +242,7 @@ abstract public class Level implements Disposable {
         this.map.dispose();
         this.disposeArray(this.drawables);
         this.disposeArray(this.sounds);
+        this.backgroundMusic.dispose();
         this.batch.dispose();
     }
 
