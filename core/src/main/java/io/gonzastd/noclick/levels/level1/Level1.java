@@ -25,7 +25,7 @@ import java.util.Set;
 
 public class Level1 extends Level {
     private Sound popSound;
-    private final MapLayer carLayer;
+    private final MapLayer parkingSlotsLayer;
     private static final Color[] CAR_COLORS = {
         Color.RED,
         Color.BLUE,
@@ -39,7 +39,7 @@ public class Level1 extends Level {
     public Level1() {
         super("map/level-one.tmx");
         TiledMap map = super.getMap();
-        this.carLayer = map.getLayers().get("cars");
+        this.parkingSlotsLayer = map.getLayers().get("parkingSlots");
         this.cars = new Array<>();
     }
 
@@ -59,7 +59,7 @@ public class Level1 extends Level {
         );
         super.addCollidable(drawableMap);
 
-        MapObjects parkingSlots = this.carLayer.getObjects();
+        MapObjects parkingSlots = this.parkingSlotsLayer.getObjects();
         Set<String> plates = new HashSet<>();
         for (MapObject parkingSlot : parkingSlots) {
             if (parkingSlot instanceof RectangleMapObject parkingSlotRectObj) { // A little check to avoid bad implementation on Tiled.
@@ -92,7 +92,7 @@ public class Level1 extends Level {
     @Override
     protected void handleLevelInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            for (MapObject carRegion : this.carLayer.getObjects()) {
+            for (MapObject carRegion : this.parkingSlotsLayer.getObjects()) {
                 RectangleMapObject rectangleCarRegion = ((RectangleMapObject) carRegion);
                 if (this.player.getBounds().overlaps(rectangleCarRegion.getRectangle())){ // TODO: Handle collisions other way.
                     for(StaticCar car : this.cars){
