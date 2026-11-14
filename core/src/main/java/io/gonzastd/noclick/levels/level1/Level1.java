@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Level1 extends Level {
+    public static float CAR_PLATE_INTERACTION_RADIUS_DISTANCE = ((float) StaticCar.BOX_WIDTH / 2)
+        + Constants.TILE_SIZE_IN_PIXELS * 2;
     private Sound popSound;
     private final MapLayer parkingSlotsLayer;
     private static final Color[] CAR_COLORS = {
@@ -76,7 +78,7 @@ public class Level1 extends Level {
 
                 this.cars.add(
                     new StaticCar(
-                        parkingSlotRect.x + (float) Constants.TILE_SIZE_IN_PIXELS, // TODO: Change parkingSlotRectangle size to car's size on Tiled.
+                        parkingSlotRect.x,
                         parkingSlotRect.y,
                         facing,
                         newColor,
@@ -92,17 +94,12 @@ public class Level1 extends Level {
     @Override
     protected void handleLevelInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            for (MapObject carRegion : this.parkingSlotsLayer.getObjects()) {
-                RectangleMapObject rectangleCarRegion = ((RectangleMapObject) carRegion);
-                if (this.player.getBounds().overlaps(rectangleCarRegion.getRectangle())){ // TODO: Handle collisions other way.
-                    for(StaticCar car : this.cars){
-                        if (car.getParkingSlotId() == (int) rectangleCarRegion.getProperties().get("id")){
-                            this.popSound.play();
-                            this.addTemporary(car.makePlateMessage());
-                            Symbol lastSeenSymbol = getLastSeenSymbol(car);
-                            this.addTemporary(lastSeenSymbol);
-                        }
-                    }
+            for(StaticCar car : this.cars){
+                if (this.player.hasObjectCloseInAxis(car, Level1.CAR_PLATE_INTERACTION_RADIUS_DISTANCE, 'x')){
+                    this.popSound.play();
+                    this.addTemporary(car.makePlateMessage());
+                    Symbol lastSeenSymbol = getLastSeenSymbol(car);
+                    this.addTemporary(lastSeenSymbol);
                 }
             }
         }
