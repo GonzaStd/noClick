@@ -60,7 +60,7 @@ public class Player extends MovableEntity {
 
         switch (axisChar) {
             case 'x' :
-                boolean isCloseInX = (Math.abs(playerBoxCenter.x - objectBoxCenter.x) <= radiusDistance);
+                boolean isCloseInX = Math.abs(playerBoxCenter.x - objectBoxCenter.x) <= radiusDistance;
                 isBetweenTheObject = Math.abs(playerBoxCenter.y - objectBoxCenter.y) <= objectBounds.getHeight()/2;
                 isClose = isCloseInX && isBetweenTheObject;
                 break;
