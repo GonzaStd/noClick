@@ -2,6 +2,8 @@ package io.gonzastd.noclick.objects.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
@@ -36,13 +38,43 @@ public class Player extends MovableEntity {
         );
     }
 
-    public boolean isObjectClose(Collidable object, float radiusDistance) {
+    public boolean hasObjectCloseRadius(Collidable object, float radiusDistance) {
         Vector2 playerBoxCenter = new Vector2();
         Vector2 objectBoxCenter = new Vector2();
         this.getBounds().getCenter(playerBoxCenter);
         object.getBounds().getCenter(objectBoxCenter);
         return playerBoxCenter.dst(objectBoxCenter) <= radiusDistance;
         // Answers: is object inside the provided radius of distance?
+    }
+
+    public boolean hasObjectCloseInAxis(Collidable object, float radiusDistance, Character axisChar) {
+        Vector2 playerBoxCenter = new Vector2();
+        Vector2 objectBoxCenter = new Vector2();
+        boolean isClose;
+        boolean isBetweenTheObject;
+
+        Rectangle playerBounds = this.getBounds();
+        Rectangle objectBounds = object.getBounds();
+        playerBounds.getCenter(playerBoxCenter);
+        objectBounds.getCenter(objectBoxCenter);
+
+        switch (axisChar) {
+            case 'x' :
+                boolean isCloseInX = (Math.abs(playerBoxCenter.x - objectBoxCenter.x) <= radiusDistance);
+                isBetweenTheObject = Math.abs(playerBoxCenter.y - objectBoxCenter.y) <= objectBounds.getHeight()/2;
+                isClose = isCloseInX && isBetweenTheObject;
+                break;
+            case 'y':
+                boolean isCloseInY = Math.abs(playerBoxCenter.y - objectBoxCenter.y) <= radiusDistance;
+                isBetweenTheObject = Math.abs(playerBoxCenter.x - objectBoxCenter.x) <= objectBounds.getWidth()/2;
+                isClose = isCloseInY && isBetweenTheObject;
+                break;
+            default:
+                throw new IllegalArgumentException("Character \"" + axisChar + "is not an axis. Use \"x\" or \"y\".");
+        }
+
+        return isClose;
+        // Answers: is object inside the provided radius of distance in the axisChar axis?
     }
 
     public void handleInput() {
