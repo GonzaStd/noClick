@@ -2,6 +2,8 @@ package io.gonzastd.noclick.objects.global;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
+import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
 
 public class Player extends MovableEntity {
@@ -33,6 +35,16 @@ public class Player extends MovableEntity {
             Player.MOVE_FRAME_DURATION
         );
     }
+
+    public boolean isObjectClose(Collidable object, float radiusDistance) {
+        Vector2 playerBoxCenter = new Vector2();
+        Vector2 objectBoxCenter = new Vector2();
+        this.getBounds().getCenter(playerBoxCenter);
+        object.getBounds().getCenter(objectBoxCenter);
+        return playerBoxCenter.dst(objectBoxCenter) <= radiusDistance;
+        // Answers: is object inside the provided radius of distance?
+    }
+
     public void handleInput() {
         float dx = 0;
         float dy = 0;
