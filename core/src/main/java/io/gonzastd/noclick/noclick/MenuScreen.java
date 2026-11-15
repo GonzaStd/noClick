@@ -47,7 +47,12 @@ public class MenuScreen implements Screen {
 
         // Each option is added with an explicit call.
         this.addButtons(table, new MenuOption[]{
-                MenuOption.NEW_GAME, MenuOption.CONTINUE_LAST_LEVEL, MenuOption.OPTIONS, MenuOption.GLOSSARY, MenuOption.CREDITS, MenuOption.EXIT_GAME
+            MenuOption.NEW_GAME,
+            MenuOption.CONTINUE_LAST_LEVEL,
+            MenuOption.OPTIONS,
+            MenuOption.GLOSSARY,
+            MenuOption.CREDITS,
+            MenuOption.EXIT_GAME
             }
         );
 
@@ -102,7 +107,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        this.stage.getViewport().update(width, height, true);
+        this.stage.getViewport()
+            .update(width, height, true);
     }
 
     @Override
