@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import io.gonzastd.noclick.levels.Level;
 import io.gonzastd.noclick.levels.LevelFactory;
 
 public class NoClickGame extends Game {
@@ -30,7 +31,8 @@ public class NoClickGame extends Game {
         if (this.lastScreen != null) { // If this is not the first screen, dispose the last one.
             this.lastScreen.dispose();
         }
-        this.lastScreen = new GameScreen(level.create());
+        Level currentLevel = level.create();
+        this.lastScreen = new GameScreen(currentLevel);
         this.setScreen(this.lastScreen);
     }
 

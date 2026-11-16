@@ -13,12 +13,18 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import io.gonzastd.noclick.levels.labels.InteractText;
+import io.gonzastd.noclick.levels.labels.ObjectiveText;
+import io.gonzastd.noclick.levels.labels.TextLabel;
 import io.gonzastd.noclick.noclick.CustomScaling;
+import io.gonzastd.noclick.noclick.GameHud;
 import io.gonzastd.noclick.objects.types.Timerizable;
 import io.gonzastd.noclick.objects.types.collidable.Collidable;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.types.Drawable;
 import io.gonzastd.noclick.objects.types.collidable.movable.MovableEntity;
+
+import java.util.*;
 
 abstract public class Level implements Disposable {
     public static final float ORIGINAL_VIRTUAL_WIDTH = 480f;
@@ -38,7 +44,14 @@ abstract public class Level implements Disposable {
     private float lastMusicVolume;
     private boolean isMusicMuted = false;
 
+    private final GameHud hud = new GameHud();
+    private final Map<Class<? extends TextLabel>, List<TextLabel>> labels = new HashMap<>();;
+
     protected final Player player = new Player(Level.ORIGINAL_VIRTUAL_WIDTH / 2f, Level.ORIGINAL_VIRTUAL_HEIGHT / 2f);
+
+    public SpriteBatch getBatch() {
+        return this.batch;
+    }
 
     public Level(String mapPath){
         this.map = new TmxMapLoader().load(mapPath);
@@ -55,6 +68,36 @@ abstract public class Level implements Disposable {
         this.collidables = new Array<>();
         this.temporaries = new Array<>();
         this.sounds = new Array<>();
+
+        this.labels.put(ObjectiveText.class, new ArrayList<>());
+        this.labels.put(InteractText.class, new ArrayList<>());
+
+    }
+
+    protected void addTextLabel(TextLabel textLabel){
+        this.labels.get(textLabel.getClass()).add(textLabel);
+        this.hud.updateLabelsTable(textLabel.getClass(), this);
+    }
+
+    protected void removeTextLabel(TextLabel textLabel){
+        this.labels.get(textLabel.getClass()).remove(textLabel);
+        this.hud.updateLabelsTable(textLabel.getClass(), this);
+
+    }
+
+    public <T extends TextLabel> List<? extends TextLabel> getTextLabels(Class<T> type) {
+        List<TextLabel> labels = this.labels.get(type);
+        if (labels == null) {
+            return Collections.emptyList();
+        } else {
+            List<T> labelsCasted = new ArrayList<>(labels.size());
+            for (TextLabel label : labels) {
+                labelsCasted.add(type.cast(label));
+                // This is for specifying the type of TextLabel
+                // Like: List<ObjectiveText> instead of List<TextLabel> for all types.
+            }
+            return Collections.unmodifiableList(labelsCasted);
+        }
     }
 
     private void toggleMuteMusic() {
@@ -185,6 +228,7 @@ abstract public class Level implements Disposable {
         }
 
         this.batch.end();
+        this.hud.draw();
     }
 
     protected abstract void handleLevelInput();
@@ -225,8 +269,10 @@ abstract public class Level implements Disposable {
     }
 
     public void resize(int width, int height) {
-        this.viewport.update(width, height, true);
+        boolean centerCamera = true;
+        this.viewport.update(width, height, centerCamera);
         this.camera.update();
+        this.hud.updateViewport(width, height, centerCamera);
     }
 
     protected float getPixelsPerUnit() {
@@ -252,6 +298,7 @@ abstract public class Level implements Disposable {
         this.disposeArray(this.sounds);
         this.backgroundMusic.dispose();
         this.batch.dispose();
+        this.hud.dispose();
     }
 
 }
