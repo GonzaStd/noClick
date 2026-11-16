@@ -24,4 +24,8 @@ public class Utilities {
 
         return String.format("%0" + ( (int) numberOfDigits) + "d", number); // cast to int to avoid misuse
     }
+
+    public int genRandomNumber(int min, int max) {
+        return this.r.nextInt(max - min + 1) + min;
+    }
 }

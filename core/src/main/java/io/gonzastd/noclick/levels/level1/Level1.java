@@ -13,12 +13,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import io.gonzastd.noclick.assets.ui.UiTextureRegionsTable;
 import io.gonzastd.noclick.levels.Level;
+import io.gonzastd.noclick.levels.labels.InteractText;
+import io.gonzastd.noclick.levels.labels.ObjectiveText;
 import io.gonzastd.noclick.noclick.Constants;
 import io.gonzastd.noclick.noclick.Utilities;
 import io.gonzastd.noclick.objects.global.Player;
 import io.gonzastd.noclick.objects.attributes.Facing;
 import io.gonzastd.noclick.objects.types.collidable.Map;
 import io.gonzastd.noclick.objects.ui.Symbol;
+import jdk.jshell.execution.Util;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +29,7 @@ import java.util.Set;
 public class Level1 extends Level {
     public static float CAR_PLATE_INTERACTION_RADIUS_DISTANCE = ((float) StaticCar.BOX_WIDTH / 2)
         + Constants.TILE_SIZE_IN_PIXELS * 2;
+    private final Utilities utilities = new Utilities();
     private Sound popSound;
     private final MapLayer parkingSlotsLayer;
     private static final Color[] CAR_COLORS = {
@@ -37,6 +41,7 @@ public class Level1 extends Level {
         Color.LIGHT_GRAY
     };
     private final Array<StaticCar> cars;
+    private InteractText seePlateMessage;
 
     public Level1() {
         super("map/level-one.tmx");
@@ -89,19 +94,47 @@ public class Level1 extends Level {
             }
         }
         super.addCollidables(this.cars);
+        StaticCar objectiveCar = this.cars.get(this.utilities.genRandomNumber(0, this.cars.size - 1));
+        this.addTextLabel(
+            new ObjectiveText(
+            null,
+            "Find the car with the next plate: "
+            + objectiveCar.getPlate()
+            )
+        );
     }
 
+    private StaticCar findInteractableCar() {
+        for (StaticCar car : this.cars) {
+            if (this.player.hasObjectCloseInAxis(
+                car, CAR_PLATE_INTERACTION_RADIUS_DISTANCE, 'x')) {
+                return car;
+            }
+        }
+        return null;
+    }
     @Override
     protected void handleLevelInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            for(StaticCar car : this.cars){
-                if (this.player.hasObjectCloseInAxis(car, Level1.CAR_PLATE_INTERACTION_RADIUS_DISTANCE, 'x')){
-                    this.popSound.play();
-                    this.addTemporary(car.makePlateMessage());
-                    Symbol lastSeenSymbol = getLastSeenSymbol(car);
-                    this.addTemporary(lastSeenSymbol);
-                }
+        StaticCar car = this.findInteractableCar();
+
+        if (car == null) {
+            if (this.seePlateMessage != null) {
+                this.removeTextLabel(this.seePlateMessage);
+                this.seePlateMessage = null;
             }
+            return;
+        }
+
+        if (this.seePlateMessage == null) {
+            this.seePlateMessage =
+                new InteractText(Input.Keys.E, "See car plate");
+            this.addTextLabel(this.seePlateMessage);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            this.popSound.play();
+            this.addTemporary(car.makePlateMessage());
+            this.addTemporary(getLastSeenSymbol(car));
         }
     }
 
@@ -127,12 +160,12 @@ public class Level1 extends Level {
     }
 
     private String genPlate() {
-        Utilities u = new Utilities();
+
         StringBuilder plate = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            plate.append(u.genRandomLetter());
+            plate.append(this.utilities.genRandomLetter());
         }
-        plate.append(u.genRandomDigits(3));
+        plate.append(this.utilities.genRandomDigits(3));
         return plate.toString();
     }
 }
