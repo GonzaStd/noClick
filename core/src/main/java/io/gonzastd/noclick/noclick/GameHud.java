@@ -106,7 +106,7 @@ public class GameHud implements Disposable {
 
         for (TextLabel textLabel: textLabels ) {
             Label label = new Label(textLabel.getText(), labelsStyle);
-            label.setFontScale(0.8f); // TODO: Allow manual modification for each label type, outside of this function.
+            label.setFontScale(1f); // TODO: Allow manual modification for each label type, outside of this function.
             table.add(label); // for modifiers use table.defaults() at the constructor of this class.
         }
     }
