@@ -14,6 +14,10 @@ This game aims to teach technical and realistic concepts in the friendliest way 
 
 The player must analyze situations, make decisions, and apply real concepts within scenarios inspired by reality, with penetration testing and social engineering.
 
+## Current Prototype Status
+
+The current version is a playable prototype: its first level is a parking lot where the player must find a car by its license plate. It includes a menu and gameplay screen, character movement and animation, a map with collisions, an objective and prompts in the HUD, interaction to view plates, music, and sound effects. Some menu options are placeholders, and progress is not saved.
+
 # Main Technologies
 
 **Java Version:** [Java 21 LTS](https://www.oracle.com/java/technologies/downloads/#jdk21-windows)  

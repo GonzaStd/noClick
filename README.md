@@ -14,6 +14,10 @@ Este juego busca enseñar conceptos técnicos y realistas de la forma más amiga
 
 El jugador deberá analizar situaciones, tomar decisiones y aplicar los conceptos reales dentro de escenarios inspirados en la realidad, con pruebas de penetración e ingeniería social.
 
+## Estado actual del prototipo
+
+La versión actual es un prototipo jugable: el primer nivel es un estacionamiento donde el jugador debe encontrar un auto por su patente. Incluye menú y pantalla de juego, movimiento y animación del personaje, mapa con colisiones, objetivo e indicaciones en el HUD, interacción para ver patentes, música y efectos de sonido. Algunas opciones del menú aún son marcadores de posición y no se guarda el progreso.
+
 # Tecnologías Principales
 
 **Version de Java:** [Java 21 LTS](https://www.oracle.com/java/technologies/downloads/#jdk21-windows)  
