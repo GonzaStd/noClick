@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] - 2026-11-18
+## [0.2.0] - 2026-11-19
 
 This prototype is not a finished game. It demonstrates a playable game flow with a menu and game screen, keyboard-controlled movement, spritesheet animation, a Tiled parking-lot environment, camera and viewport handling, and interaction with cars that changes the game state. Visual and audio feedback include plate messages, HUD objective and interaction labels, music, and sound effects, with a mute control. The prototype focuses on the central mechanic and project structure; it does not include every level or final production assets.
 
+
+### Added
+
+- Added this comprehensive changelog with categorized, dated commit history
+- `8460193` Added a YouTube gameplay video to the README files using clickable thumbnail previews.
 
 ### Improved
 
@@ -19,10 +24,6 @@ This prototype is not a finished game. It demonstrates a playable game flow with
 ### Changed
 
 - `ec10b11` Updated the README files to describe the current playable prototype.
-
-### Added
-
-- Added: This comprehensive changelog with categorized, dated commit history
 
 ## [0.1.24] - 2026-11-16
 
