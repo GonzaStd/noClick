@@ -18,6 +18,10 @@ The player must analyze situations, make decisions, and apply real concepts with
 
 The current version is a playable prototype: its first level is a parking lot where the player must find a car by its license plate. It includes a menu and gameplay screen, character movement and animation, a map with collisions, an objective and prompts in the HUD, interaction to view plates, music, and sound effects. Some menu options are placeholders, and progress is not saved.
 
+## Gameplay Video
+
+[![Watch noClick on YouTube](https://img.youtube.com/vi/7QO27DjLKEA/0.jpg)](https://youtu.be/7QO27DjLKEA)
+
 # Main Technologies
 
 **Java Version:** [Java 21 LTS](https://www.oracle.com/java/technologies/downloads/#jdk21-windows)  

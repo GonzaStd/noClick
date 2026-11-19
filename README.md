@@ -18,6 +18,10 @@ El jugador deberá analizar situaciones, tomar decisiones y aplicar los concepto
 
 La versión actual es un prototipo jugable: el primer nivel es un estacionamiento donde el jugador debe encontrar un auto por su patente. Incluye menú y pantalla de juego, movimiento y animación del personaje, mapa con colisiones, objetivo e indicaciones en el HUD, interacción para ver patentes, música y efectos de sonido. Algunas opciones del menú aún son marcadores de posición y no se guarda el progreso.
 
+## Video de presentación
+
+[![Ver video de noClick en YouTube](https://img.youtube.com/vi/7QO27DjLKEA/0.jpg)](https://youtu.be/7QO27DjLKEA)
+
 # Tecnologías Principales
 
 **Version de Java:** [Java 21 LTS](https://www.oracle.com/java/technologies/downloads/#jdk21-windows)  
